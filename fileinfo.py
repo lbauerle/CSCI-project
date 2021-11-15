@@ -186,5 +186,22 @@ def laserdata(laserfilename):
         This output is the field amplitude data for the electric field in atomic 
         units.
     """
+    file_handle = open(laserfilename, mode='r')
+    filedata = []
     
-    return laserdata
+    for line in file_handle:
+        new_line = line.strip()
+        filedata.append(new_line)
+    file_handle.close()
+    
+    start = 6              # line number where data starts
+    end = len(filedata)    # line number where data ends
+    
+    data = filedata[start:end]
+    ampdata = []
+    
+    # extract only laser information from file
+    for i in range(len(data)):
+        ampdata.append(data[i].split()[3])
+        
+    return ampdata
