@@ -1,3 +1,5 @@
+import numpy as np
+
 def densitydata(densfilename):
     """
     This function extracts the values from a grid-based density file.
@@ -25,7 +27,7 @@ def densitydata(densfilename):
     start = 7 - len(filedata) # get rid of header
     end = len(filedata) - 5   # get rid of footer
     
-    densdata = filedata[start:end]
+    densdata = np.asarray(filedata[start:end])
     
     return densdata
 
@@ -55,6 +57,10 @@ def gridsize(densfilename):
         symmetric axes. A symmetric z-axis would have values ranging from 
         +/- sizez.
     """
+    
+    file_handle = open(densfilename, mode='r')
+    print(file_handle.readlines())
+
     
     return sizex, sizey, sizez
 
