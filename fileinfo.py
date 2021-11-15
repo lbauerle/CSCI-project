@@ -150,6 +150,18 @@ def lasertime(laserfilename):
         This output is the time data for the electric field in atomic 
         units.
     """
+    file_handle = open(laserfilename, mode='r')
+    filedata = []
+    
+    for line in file_handle:
+        new_line = line.strip()
+        filedata.append(new_line)
+    file_handle.close()
+    
+    start = 6              # line number where data starts
+    end = len(filedata)    # line number where data ends
+    
+    lasertime = np.asarray(filedata[start:end])
     
     return lasertime
 
