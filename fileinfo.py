@@ -123,7 +123,12 @@ def numgridpoints(densfilename):
     numz : int
         This output is the number of points in the x-direction.
     """
+    file_handle = open(densfilename, mode='r')
+    sizeline = file_handle.readlines()[0]
+    data = sizeline.split()
     
+    numx = data[6]
+    print(numx)
     return numx, numy, numz
 
 def lasertime(laserfilename):
