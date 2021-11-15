@@ -126,9 +126,12 @@ def numgridpoints(densfilename):
     file_handle = open(densfilename, mode='r')
     sizeline = file_handle.readlines()[0]
     data = sizeline.split()
+       
+    numx = data[5]
+    numz = data[6]
+    numy = data[7]
     
-    numx = data[6]
-    print(numx)
+    print(numx, numy, numz)
     return numx, numy, numz
 
 def lasertime(laserfilename):
