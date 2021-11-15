@@ -164,6 +164,7 @@ def lasertime(laserfilename):
     data = filedata[start:end]
     timedata = []
     
+    # extract only time information from file
     for i in range(len(data)):
         timedata.append(data[i].split()[1])
     
