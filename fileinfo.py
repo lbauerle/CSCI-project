@@ -93,9 +93,11 @@ def gridspacing(densfilename):
     xline = file_handle.readlines()[2]
     dx = float(xline.split()[1])
     
+    file_handle = open(densfilename, mode='r')
     yline = file_handle.readlines()[3]
     dy = float(yline.split()[2])
     
+    file_handle = open(densfilename, mode='r')
     zline = file_handle.readlines()[4]
     dz = float(zline.split()[3])
     
