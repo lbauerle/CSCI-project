@@ -65,7 +65,6 @@ def gridsize(densfilename):
     sizey = abs(float(data[2]))
     sizez = abs(float(data[3]))
 
-    print(sizex, sizey, sizez)
     return sizex, sizey, sizez
 
 def gridspacing(densfilename):
@@ -90,6 +89,10 @@ def gridspacing(densfilename):
         This output is the grid spacing in the x-direction.
         
     """
+    file_handle = open(densfilename, mode='r')
+    xline = file_handle.readlines()[2]
+    dx = xline.split()[1]
+    print(dx)
     
     return dx, dy, dz
 
