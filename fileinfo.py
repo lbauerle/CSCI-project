@@ -161,9 +161,13 @@ def lasertime(laserfilename):
     start = 6              # line number where data starts
     end = len(filedata)    # line number where data ends
     
-    lasertime = np.asarray(filedata[start:end])
+    data = filedata[start:end]
+    timedata = []
     
-    return lasertime
+    for i in range(len(data)):
+        timedata.append(data[i].split()[1])
+    
+    return timedata
 
 def laserdata(laserfilename):
     """
