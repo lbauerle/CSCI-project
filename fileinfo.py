@@ -61,9 +61,11 @@ def gridsize(densfilename):
     file_handle = open(densfilename, mode='r')
     sizeline = file_handle.readlines()[1]
     data = sizeline.split()
-    print(data)
+    sizex = abs(float(data[1]))
+    sizey = abs(float(data[2]))
+    sizez = abs(float(data[3]))
 
-    
+    print(sizex, sizey, sizez)
     return sizex, sizey, sizez
 
 def gridspacing(densfilename):
