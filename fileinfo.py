@@ -14,14 +14,19 @@ def densitydata(densfilename):
         data is not formatted back on the original grid.
     """
     
-    file_handle = open(filename, mode='r')
-    densdata = []
+    file_handle = open(densfilename, mode='r')
+    filedata = []
     
     for line in file_handle:
-            new_line = line.strip().split(delimiter)
-            data_list.append(new_line)
-        file_handle.close()
-        
+        new_line = line.strip()
+        filedata.append(new_line)
+    file_handle.close()
+    
+    start = 7 - len(filedata) # get rid of header
+    end = len(filedata) - 5   # get rid of footer
+    
+    densdata = filedata[start:end]
+    
     return densdata
 
 def gridsize(densfilename):
