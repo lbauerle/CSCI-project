@@ -186,7 +186,7 @@ def laserdata(laserfilename, polarization):
     
     Returns
     ------------------
-    laserdata : array
+    ampdata : array
         This output is the field amplitude data for the electric field in atomic 
         units.
     """
