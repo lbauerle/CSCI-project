@@ -59,7 +59,7 @@ def gridsize(densfilename):
     """
     
     file_handle = open(densfilename, mode='r')
-    print(file_handle.readlines())
+    print(file_handle.readlines()[1])
 
     
     return sizex, sizey, sizez
