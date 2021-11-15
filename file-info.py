@@ -92,3 +92,41 @@ def numgridpoints(densfilename):
     """
     
     return numx, numy, numz
+
+def lasertime(laserfilename):
+    """
+    This function extracts the time information for the laser output from 
+    Octopus.
+    
+    Parameters
+    ------------------
+    laserfilename : string
+        This input is the full path of the laser file from octopus.
+    
+    Returns
+    ------------------
+    lasertime : array
+        This output is the time data for the electric field in atomic 
+        units.
+    """
+    
+    return lasertime
+
+def laserdata(laserfilename):
+    """
+    This function extracts the time information for the laser output from 
+    Octopus.
+    
+    Parameters
+    ------------------
+    laserfilename : string
+        This input is the full path of the laser file from octopus.
+    
+    Returns
+    ------------------
+    laserdata : array
+        This output is the field amplitude data for the electric field in atomic 
+        units.
+    """
+    
+    return laserdata
