@@ -170,7 +170,7 @@ def lasertime(laserfilename):
     
     return timedata
 
-def laserdata(laserfilename):
+def laserdata(laserfilename, polarization):
     """
     This function extracts the time information for the laser output from 
     Octopus.
@@ -179,6 +179,10 @@ def laserdata(laserfilename):
     ------------------
     laserfilename : string
         This input is the full path of the laser file from octopus.
+
+    polarization : string
+        This input denotes the polarization direction of the laser field. 
+        Options are 'x', 'y', and 'z'.
     
     Returns
     ------------------
@@ -186,6 +190,7 @@ def laserdata(laserfilename):
         This output is the field amplitude data for the electric field in atomic 
         units.
     """
+    
     file_handle = open(laserfilename, mode='r')
     filedata = []
     
@@ -200,8 +205,15 @@ def laserdata(laserfilename):
     data = filedata[start:end]
     ampdata = []
     
+    if polarization == 'x':
+        pol = 2
+    elif polarization == 'y':
+        pol = 3
+    elif polarization == 'z':
+        pol = 4
+    
     # extract only laser information from file
     for i in range(len(data)):
-        ampdata.append(data[i].split()[3])
+        ampdata.append(data[i].split()[pol])
         
     return ampdata
