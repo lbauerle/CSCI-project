@@ -50,6 +50,12 @@ density_file = f'{directory}/td.0000000/density.dx'
 
 
 size_x, size_y, size_z = fi.numgridpoints(density_file)
+
+# needed to do this for the code to run! Should I change this in the fileinfo.py file?
+size_x = int(size_x)
+size_y = int(size_y)
+size_z = int(size_z)
+
 dx, dy, dz = fi.gridspacing(density_file)
 num_x, num_y, num_z = fi.numgridpoints(density_file)
 
