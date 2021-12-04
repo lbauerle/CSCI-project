@@ -16,7 +16,6 @@ def densitydata(densfilename):
         This contains all of the density information as an array. Note: the 
         data is not formatted back on the original grid.
     """
-    start1 = time.time()
     file_handle = open(densfilename, mode='r')
     filedata = []
     
@@ -29,13 +28,7 @@ def densitydata(densfilename):
     end = len(filedata) - 5   # get rid of footer
     
     densdata = np.asarray(filedata[start:end])
-    print(str(time.time() - start1) + ' seconds')
-    
-    start2 = time.time()
-    densdata2 = np.genfromtxt(densfilename, skip_header=7, skip_footer=5)
-    densdata2 = np.array(densdata2)
-    print(str(time.time() - start2) + ' seconds')
-    
+      
     return densdata
 
 def gridsize(densfilename):
