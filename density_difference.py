@@ -27,6 +27,10 @@ def density_difference(dens_data1, dens_data2, integration_type, grid_spacing):
 def density_difference_plot(directory, index, xx, yy, densdata_xy):
     """
     density_difference_plot plots the difference in the densities
+    
+    Inputs
+    
+    Returns
     """
     
     i = index
@@ -51,6 +55,10 @@ def density_difference_plot(directory, index, xx, yy, densdata_xy):
     
     
 def density_difference_calc():
+    """
+    Inputs
+    Returns
+    """
     
     directory = "./13CHD/output_iter/"
     density_file = f'{directory}/td.0000000/density.dx'
