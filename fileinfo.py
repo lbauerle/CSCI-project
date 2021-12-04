@@ -31,6 +31,7 @@ def density_data(density_file_name):
     end = len(file_data) - 5
 
     density_data = np.asarray(file_data[start:end])
+    density_data = np.asarray(file_data[start:end], float)
 
     return density_data
 
@@ -44,6 +45,7 @@ def grid_size(density_file_name):
     density_file_name : string
         This input is the full path of the .dx file from which to get data.
 
+
     Returns
     ------------------
     size_x : float
@@ -51,10 +53,12 @@ def grid_size(density_file_name):
         symmetric axes. A symmetric x-axis would have values ranging from
         +/- size_x.
 
+
     size_y : float
         This is the size maximum value of the grid along the y-axis for
         symmetric axes. A symmetric y-axis would have values ranging from
         +/- size_y.
+
 
     size_z : float
         This is the size maximum value of the grid along the z-axis for
@@ -71,11 +75,11 @@ def grid_size(density_file_name):
 
     return size_x, size_y, size_z
 
-
 def grid_spacing(density_file_name):
     """
     This function extracts the spacing of points in each axis of the grid
     from a .dx file type.
+
 
     Parameters
     ------------------
@@ -87,9 +91,9 @@ def grid_spacing(density_file_name):
     dx : float
         This output is the grid spacing in the x-direction.
 
+
     dy : float
         This output is the grid spacing in the x-direction.
-
     dz : float
         This output is the grid spacing in the x-direction.
     """
@@ -113,10 +117,12 @@ def num_grid_points(density_file_name):
     """
     This function extracts the number of points in each cartesian direction.
 
+
     Parameters
     ------------------
     density_file_name : string
         This input is the full path of the .dx file from which to get data.
+
 
     Returns
     ------------------
@@ -126,6 +132,9 @@ def num_grid_points(density_file_name):
     num_y : int
         This output is the number of pointsg in the x-direction.
 
+
+    num_y : int
+        This output is the number of pointsg in the x-direction.
     num_z : int
         This output is the number of points in the x-direction.
     """
@@ -190,7 +199,6 @@ def laser_data(laser_file_name, polarization):
     ------------------
     laser_file_name : string
         This input is the full path of the laser file from octopus.
-
     polarization : string
         This input denotes the polarization direction of the laser field.
         Options are 'x', 'y', and 'z'.
@@ -230,3 +238,4 @@ def laser_data(laser_file_name, polarization):
         amplitude_data.append(data[i].split()[pol])
 
     return amplitude_data
+    return amplitude_date
