@@ -12,19 +12,28 @@ def input_parser():
     """
 
     parser = argparse.ArgumentParser(
-        description='Get state counts filtered by year.')
+        description='')
 
-    parser.add_argument('-f', '--file', type=str,
+    parser.add_argument('-d', '--dens', type=str,
                         action='store',
                         required=False,
-                        help="This is the file to be parsed.")
+                        help="This is the denisty to be parsed.")
+    counter_inputs = parser.parse_args()
+    
+    parser.add_argument('-l', '--laser', type=str,
+                        action='store',
+                        required=False,
+                        help="This is the laser to be parsed.")
     counter_inputs = parser.parse_args()
 
     if counter_inputs.config:
         config = configparser.ConfigParser()
         config.read("./config.ini")
-        filename = config['FILES']['filename']
-        return filename
+        density_file = config['FILES']['density_name']
+        laser_file = config['FILES']['laser_name']
+        
+        return density_file, laser_file
     else:
-        filename = counter_inputs.file
-        return filename
+        density_file = counter_inputs.dens
+        laser_file = counter_inputs.laser
+        return density_file, laser_file
