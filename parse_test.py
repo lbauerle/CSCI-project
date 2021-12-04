@@ -29,8 +29,8 @@ def input_parser():
     if counter_inputs.config:
         config = configparser.ConfigParser()
         config.read("./config.ini")
-        density_file = config['FILES']['density_name']
-        laser_file = config['FILES']['laser_name']
+        density_file = config['DENSITY']['density_name']
+        laser_file = config['LASER']['laser_name']
         
         return density_file, laser_file
     else:
