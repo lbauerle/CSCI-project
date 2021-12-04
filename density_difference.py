@@ -86,7 +86,7 @@ def density_difference_plot(directory, index, xx, yy, densdata_xy):
 def main():
     #density_difference_calc()
     
-        directory = "./13CHD/output_iter/"
+    directory = "./13CHD/output_iter/"
     density_file = f'{directory}/td.0000000/density.dx'
     
     size_x, size_y, size_z = fi.numgridpoints(density_file)
@@ -108,7 +108,7 @@ def main():
     xx, yy = np.meshgrid(x, y)
     
     # looping through the data files; for now we will just work with one file
-    for i in range(0, 100, 100):
+    for i in range(0, 100, 101):
         print('working on iteration ' + str(i))
         ii = str(i)
         iii = ii.zfill(7)
