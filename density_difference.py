@@ -46,11 +46,12 @@ def density_difference_plot(index, xx, yy, densdata_xy):
 
 # denote where files are coming from
 directory = './13CHD/output_iter/'
-density = f'{directory}/td.0000000/density.dx'
+density_file = f'{directory}/td.0000000/density.dx'
 
 
-size_x, size_y, size_z = fi.numgridpoints(density)
-dx, dy, dz = fi.gridspacing(density)
+size_x, size_y, size_z = fi.numgridpoints(density_file)
+dx, dy, dz = fi.gridspacing(density_file)
+num_x, num_y, num_z = fi.numgridpoints(density_file)
 
 # number of points in x, y, and z dimensions as well as grid spacing, dz
 #SizeX = np.genfromtxt(Density1, max_rows = 1, dtype = int, usecols = 8, delimiter = ' ')
@@ -59,11 +60,11 @@ dx, dy, dz = fi.gridspacing(density)
 #dz = 0.3
 
 # formatting
-densdata1 = np.genfromtxt(Density1,skip_header=7,skip_footer=5)
-dens_data1 = np.array(densdata1) #, dtype = np.uint8)
-dens_data1 = np.reshape(dens_data1,(SizeX,SizeY,SizeZ))
-x = [np.linspace(-39.9, 39.9, num=SizeX)]
-y = [np.linspace(-39.9, 39.9, num=SizeY)]
+densdata = np.genfromtxt(density_file,skip_header=7,skip_footer=5)
+dens_data = np.array(densdata) #, dtype = np.uint8)
+dens_data = np.reshape(dens_data,(size_x, size_y, size_z))
+x = [np.linspace(-39.9, 39.9, num = size_x)]
+y = [np.linspace(-39.9, 39.9, num = size_y)]
 xx, yy = np.meshgrid(x, y)
 
 
@@ -75,7 +76,7 @@ for i in range(0, 100, 100):
     Density2 = f'{directory}/td.{iii}/density.dx'
     densdata2 = np.genfromtxt(Density2,skip_header=7,skip_footer=5)
     dens_data2 = np.array(densdata2)
-    dens_data2 = np.reshape(dens_data2,(SizeX,SizeY,SizeZ))
+    dens_data2 = np.reshape(dens_data2,(size_x, size_y, size_z))
     
-    densdata_xy = density_difference(dens_data1, dens_data2, "riemann", dz)
+    densdata_xy = density_difference(dens_data, dens_data2, "riemann", dz)
     density_difference_plot(i, xx, yy, densdata_xy)
