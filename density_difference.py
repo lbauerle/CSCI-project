@@ -1,6 +1,7 @@
 # import libraries
 import numpy as np
 import matplotlib.pyplot as plt
+import fileinfo as fi
 
 def density_difference(dens_data1, dens_data2, integration_type, grid_spacing):
     """ 
@@ -45,13 +46,17 @@ def density_difference_plot(index, xx, yy, densdata_xy):
 
 # denote where files are coming from
 directory = './13CHD/output_iter/'
-Density1 = f'{directory}/td.0000000/density.dx'
+density = f'{directory}/td.0000000/density.dx'
+
+
+size_x, size_y, size_z = fi.numgridpoints(density)
+dx, dy, dz = fi.gridspacing(density)
 
 # number of points in x, y, and z dimensions as well as grid spacing, dz
-SizeX = np.genfromtxt(Density1, max_rows = 1, dtype = int, usecols = 8, delimiter = ' ')
-SizeY = np.genfromtxt(Density1, max_rows = 1, dtype = int, usecols = 12, delimiter = ' ')
-SizeZ = np.genfromtxt(Density1, max_rows = 1, dtype = int, usecols = 16, delimiter = ' ')
-dz = 0.3
+#SizeX = np.genfromtxt(Density1, max_rows = 1, dtype = int, usecols = 8, delimiter = ' ')
+#SizeY = np.genfromtxt(Density1, max_rows = 1, dtype = int, usecols = 12, delimiter = ' ')
+#SizeZ = np.genfromtxt(Density1, max_rows = 1, dtype = int, usecols = 16, delimiter = ' ')
+#dz = 0.3
 
 # formatting
 densdata1 = np.genfromtxt(Density1,skip_header=7,skip_footer=5)
