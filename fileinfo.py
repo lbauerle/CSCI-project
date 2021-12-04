@@ -1,85 +1,85 @@
 import numpy as np
 
 
-def densitydata(densfilename):
+def density_data(density_file_name):
     """
     This function extracts the values from a grid-based density file.
 
     Parameters
     ------------------
-    densfilename : string
+    density_file_name : string
         This input is the full path of the .dx file from which to get data.
 
     Returns
     ------------------
-    densdata : array
+    density_data : array
         This contains all of the density information as an array. Note: the
         data is not formatted back on the original grid.
     """
 
-    file_handle = open(densfilename, mode='r')
-    filedata = []
+    file_handle = open(density_file_name, mode='r')
+    file_data = []
 
     for line in file_handle:
         new_line = line.strip()
-        filedata.append(new_line)
+        file_data.append(new_line)
     file_handle.close()
 
     # get rid of header
-    start = 7 - len(filedata)
+    start = 7 - len(file_data)
     # get rid of footer
-    end = len(filedata) - 5
+    end = len(file_data) - 5
 
-    densdata = np.asarray(filedata[start:end])
+    density_data = np.asarray(file_data[start:end])
 
-    return densdata
+    return density_data
 
 
-def gridsize(densfilename):
+def grid_size(density_file_name):
     """
     This function extracts the size of the grid from a .dx file type.
 
     Parameters
     ------------------
-    densfilename : string
+    density_file_name : string
         This input is the full path of the .dx file from which to get data.
 
     Returns
     ------------------
-    sizex : float
+    size_x : float
         This is the size maximum value of the grid along the x-axis for
         symmetric axes. A symmetric x-axis would have values ranging from
-        +/- sizex.
+        +/- size_x.
 
-    sizey : float
+    size_y : float
         This is the size maximum value of the grid along the y-axis for
         symmetric axes. A symmetric y-axis would have values ranging from
-        +/- sizey.
+        +/- size_y.
 
-    sizez : float
+    size_z : float
         This is the size maximum value of the grid along the z-axis for
         symmetric axes. A symmetric z-axis would have values ranging from
-        +/- sizez.
+        +/- size_z.
     """
 
-    file_handle = open(densfilename, mode='r')
-    sizeline = file_handle.readlines()[1]
-    data = sizeline.split()
-    sizex = abs(float(data[1]))
-    sizey = abs(float(data[2]))
-    sizez = abs(float(data[3]))
+    file_handle = open(density_file_name, mode='r')
+    size_line = file_handle.readlines()[1]
+    data = size_line.split()
+    size_x = abs(float(data[1]))
+    size_y = abs(float(data[2]))
+    size_z = abs(float(data[3]))
 
-    return sizex, sizey, sizez
+    return size_x, size_y, size_z
 
 
-def gridspacing(densfilename):
+def grid_spacing(density_file_name):
     """
     This function extracts the spacing of points in each axis of the grid
     from a .dx file type.
 
     Parameters
     ------------------
-    densfilename : string
+    density_file_name : string
         This input is the full path of the .dx file from which to get data.
 
     Returns
@@ -94,61 +94,61 @@ def gridspacing(densfilename):
         This output is the grid spacing in the x-direction.
     """
 
-    file_handle = open(densfilename, mode='r')
+    file_handle = open(density_file_name, mode='r')
     xline = file_handle.readlines()[2]
     dx = float(xline.split()[1])
 
-    file_handle = open(densfilename, mode='r')
+    file_handle = open(density_file_name, mode='r')
     yline = file_handle.readlines()[3]
     dy = float(yline.split()[2])
 
-    file_handle = open(densfilename, mode='r')
+    file_handle = open(density_file_name, mode='r')
     zline = file_handle.readlines()[4]
     dz = float(zline.split()[3])
 
     return dx, dy, dz
 
 
-def numgridpoints(densfilename):
+def num_grid_points(density_file_name):
     """
     This function extracts the number of points in each cartesian direction.
 
     Parameters
     ------------------
-    densfilename : string
+    density_file_name : string
         This input is the full path of the .dx file from which to get data.
 
     Returns
     ------------------
-    numx : int
+    num_x : int
         This output is the number of points in the x-directions.
 
-    numy : int
+    num_y : int
         This output is the number of pointsg in the x-direction.
 
-    numz : int
+    num_z : int
         This output is the number of points in the x-direction.
     """
 
-    file_handle = open(densfilename, mode='r')
-    sizeline = file_handle.readlines()[0]
-    data = sizeline.split()
+    file_handle = open(density_file_name, mode='r')
+    size_line = file_handle.readlines()[0]
+    data = size_line.split()
 
-    numx = data[5]
-    numz = data[6]
-    numy = data[7]
+    num_x = data[5]
+    num_z = data[6]
+    num_y = data[7]
 
-    return numx, numy, numz
+    return num_x, num_y, num_z
 
 
-def lasertime(laserfilename):
+def laser_time(laser_file_name):
     """
     This function extracts the time information for the laser output from
     Octopus.
 
     Parameters
     ------------------
-    laserfilename : string
+    laser_file_name : string
         This input is the full path of the laser file from octopus.
 
     Returns
@@ -158,37 +158,37 @@ def lasertime(laserfilename):
         units.
     """
 
-    file_handle = open(laserfilename, mode='r')
-    filedata = []
+    file_handle = open(laser_file_name, mode='r')
+    file_data = []
 
     for line in file_handle:
         new_line = line.strip()
-        filedata.append(new_line)
+        file_data.append(new_line)
     file_handle.close()
 
     # line number where data starts (for octopus inputs)
     start = 6
     # line number where data ends (for octopus inputs)
-    end = len(filedata)
+    end = len(file_data)
 
-    data = filedata[start:end]
-    timedata = []
+    data = file_data[start:end]
+    time_data = []
 
     # extract only time information from file
     for i in range(len(data)):
-        timedata.append(data[i].split()[1])
+        time_data.append(data[i].split()[1])
 
-    return timedata
+    return time_data
 
 
-def laserdata(laserfilename, polarization):
+def laser_data(laser_file_name, polarization):
     """
     This function extracts the time information for the laser output from
     Octopus.
 
     Parameters
     ------------------
-    laserfilename : string
+    laser_file_name : string
         This input is the full path of the laser file from octopus.
 
     polarization : string
@@ -197,26 +197,26 @@ def laserdata(laserfilename, polarization):
 
     Returns
     ------------------
-    ampdata : array
+    amplitude_data : array
         This output is the field amplitude data for the electric field in
         atomic units.
     """
 
-    file_handle = open(laserfilename, mode='r')
-    filedata = []
+    file_handle = open(laser_file_name, mode='r')
+    file_data = []
 
     for line in file_handle:
         new_line = line.strip()
-        filedata.append(new_line)
+        file_data.append(new_line)
     file_handle.close()
 
     # line number where data starts (for octopus inputs)
     start = 6
     # line number where data ends (for octopus inputs)
-    end = len(filedata)
+    end = len(file_data)
 
-    data = filedata[start:end]
-    ampdata = []
+    data = file_data[start:end]
+    amplitude_data = []
 
     if polarization == 'x':
         pol = 2
@@ -227,6 +227,6 @@ def laserdata(laserfilename, polarization):
 
     # extract only laser information from file
     for i in range(len(data)):
-        ampdata.append(data[i].split()[pol])
+        amplitude_data.append(data[i].split()[pol])
 
-    return ampdata
+    return amplitude_data
