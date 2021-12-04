@@ -74,4 +74,3 @@ for i in range(0, 100, 100):
     
     densdata_xy = density_difference(dens_data1, dens_data2, "riemann", dz)
     density_difference_plot(i, xx, yy, densdata_xy)
-     

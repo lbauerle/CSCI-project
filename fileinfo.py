@@ -1,0 +1,219 @@
+import numpy as np
+
+def densitydata(densfilename):
+    """
+    This function extracts the values from a grid-based density file.
+    
+    Parameters
+    ------------------
+    densfilename : string
+        This input is the full path of the .dx file from which to get data.
+    
+    Returns
+    ------------------
+    densdata : array
+        This contains all of the density information as an array. Note: the 
+        data is not formatted back on the original grid.
+    """
+    
+    file_handle = open(densfilename, mode='r')
+    filedata = []
+    
+    for line in file_handle:
+        new_line = line.strip()
+        filedata.append(new_line)
+    file_handle.close()
+    
+    start = 7 - len(filedata) # get rid of header
+    end = len(filedata) - 5   # get rid of footer
+    
+    densdata = np.asarray(filedata[start:end])
+    
+    return densdata
+
+def gridsize(densfilename):
+    """
+    This function extracts the size of the grid from a .dx file type.
+    
+    Parameters
+    ------------------
+    densfilename : string
+        This input is the full path of the .dx file from which to get data.
+    
+    Returns
+    ------------------
+    sizex : float
+        This is the size maximum value of the grid along the x-axis for 
+        symmetric axes. A symmetric x-axis would have values ranging from 
+        +/- sizex.
+        
+    sizey : float
+        This is the size maximum value of the grid along the y-axis for 
+        symmetric axes. A symmetric y-axis would have values ranging from 
+        +/- sizey.
+        
+    sizez : float
+        This is the size maximum value of the grid along the z-axis for 
+        symmetric axes. A symmetric z-axis would have values ranging from 
+        +/- sizez.
+    """
+    
+    file_handle = open(densfilename, mode='r')
+    sizeline = file_handle.readlines()[1]
+    data = sizeline.split()
+    sizex = abs(float(data[1]))
+    sizey = abs(float(data[2]))
+    sizez = abs(float(data[3]))
+
+    return sizex, sizey, sizez
+
+def gridspacing(densfilename):
+    """
+    This function extracts the spacing of points in each axis of the grid 
+    from a .dx file type.
+    
+    Parameters
+    ------------------
+    densfilename : string
+        This input is the full path of the .dx file from which to get data.
+    
+    Returns
+    ------------------
+    dx : float
+        This output is the grid spacing in the x-direction.
+    
+    dy : float
+        This output is the grid spacing in the x-direction.
+
+    dz : float
+        This output is the grid spacing in the x-direction.
+        
+    """
+    file_handle = open(densfilename, mode='r')
+    xline = file_handle.readlines()[2]
+    dx = float(xline.split()[1])
+    
+    file_handle = open(densfilename, mode='r')
+    yline = file_handle.readlines()[3]
+    dy = float(yline.split()[2])
+    
+    file_handle = open(densfilename, mode='r')
+    zline = file_handle.readlines()[4]
+    dz = float(zline.split()[3])
+    
+    return dx, dy, dz
+
+def numgridpoints(densfilename):
+    """
+    This function extracts the number of points in each cartesian direction.
+    
+    Parameters
+    ------------------
+    densfilename : string
+        This input is the full path of the .dx file from which to get data.
+    
+    Returns
+    ------------------
+    numx : int
+        This output is the number of points in the x-directions.
+    
+    numy : int
+        This output is the number of pointsg in the x-direction.
+
+    numz : int
+        This output is the number of points in the x-direction.
+    """
+    file_handle = open(densfilename, mode='r')
+    sizeline = file_handle.readlines()[0]
+    data = sizeline.split()
+       
+    numx = data[5]
+    numz = data[6]
+    numy = data[7]
+    
+    print(numx, numy, numz)
+    return numx, numy, numz
+
+def lasertime(laserfilename):
+    """
+    This function extracts the time information for the laser output from 
+    Octopus.
+    
+    Parameters
+    ------------------
+    laserfilename : string
+        This input is the full path of the laser file from octopus.
+    
+    Returns
+    ------------------
+    lasertime : array
+        This output is the time data for the electric field in atomic 
+        units.
+    """
+    file_handle = open(laserfilename, mode='r')
+    filedata = []
+    
+    for line in file_handle:
+        new_line = line.strip()
+        filedata.append(new_line)
+    file_handle.close()
+    
+    start = 6              # line number where data starts
+    end = len(filedata)    # line number where data ends
+    
+    data = filedata[start:end]
+    timedata = []
+    
+    # extract only time information from file
+    for i in range(len(data)):
+        timedata.append(data[i].split()[1])
+    
+    return timedata
+
+def laserdata(laserfilename, polarization):
+    """
+    This function extracts the time information for the laser output from 
+    Octopus.
+    
+    Parameters
+    ------------------
+    laserfilename : string
+        This input is the full path of the laser file from octopus.
+
+    polarization : string
+        This input denotes the polarization direction of the laser field. 
+        Options are 'x', 'y', and 'z'.
+    
+    Returns
+    ------------------
+    ampdata : array
+        This output is the field amplitude data for the electric field in atomic 
+        units.
+    """
+    
+    file_handle = open(laserfilename, mode='r')
+    filedata = []
+    
+    for line in file_handle:
+        new_line = line.strip()
+        filedata.append(new_line)
+    file_handle.close()
+    
+    start = 6              # line number where data starts
+    end = len(filedata)    # line number where data ends
+    
+    data = filedata[start:end]
+    ampdata = []
+    
+    if polarization == 'x':
+        pol = 2
+    elif polarization == 'y':
+        pol = 3
+    elif polarization == 'z':
+        pol = 4
+    
+    # extract only laser information from file
+    for i in range(len(data)):
+        ampdata.append(data[i].split()[pol])
+        
+    return ampdata
