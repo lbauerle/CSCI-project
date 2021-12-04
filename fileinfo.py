@@ -1,4 +1,5 @@
 import numpy as np
+import time
 
 def densitydata(densfilename):
     """
@@ -15,7 +16,7 @@ def densitydata(densfilename):
         This contains all of the density information as an array. Note: the 
         data is not formatted back on the original grid.
     """
-    
+    start = time.process_time()
     file_handle = open(densfilename, mode='r')
     filedata = []
     
@@ -28,6 +29,7 @@ def densitydata(densfilename):
     end = len(filedata) - 5   # get rid of footer
     
     densdata = np.asarray(filedata[start:end])
+    print(str(time.process_time() - start) + ' seconds')
     
     return densdata
 
@@ -57,13 +59,14 @@ def gridsize(densfilename):
         symmetric axes. A symmetric z-axis would have values ranging from 
         +/- sizez.
     """
-    
+    start = time.process_time()
     file_handle = open(densfilename, mode='r')
     sizeline = file_handle.readlines()[1]
     data = sizeline.split()
     sizex = abs(float(data[1]))
     sizey = abs(float(data[2]))
     sizez = abs(float(data[3]))
+    print(str(time.process_time() - start) + ' seconds')
 
     return sizex, sizey, sizez
 
@@ -89,6 +92,7 @@ def gridspacing(densfilename):
         This output is the grid spacing in the x-direction.
         
     """
+    start = time.process_time()
     file_handle = open(densfilename, mode='r')
     xline = file_handle.readlines()[2]
     dx = float(xline.split()[1])
@@ -100,6 +104,7 @@ def gridspacing(densfilename):
     file_handle = open(densfilename, mode='r')
     zline = file_handle.readlines()[4]
     dz = float(zline.split()[3])
+    print(str(time.process_time() - start) + ' seconds')
     
     return dx, dy, dz
 
@@ -123,6 +128,7 @@ def numgridpoints(densfilename):
     numz : int
         This output is the number of points in the x-direction.
     """
+    start = time.process_time()
     file_handle = open(densfilename, mode='r')
     sizeline = file_handle.readlines()[0]
     data = sizeline.split()
@@ -132,6 +138,7 @@ def numgridpoints(densfilename):
     numy = data[7]
     
     print(numx, numy, numz)
+    print(str(time.process_time() - start) + ' seconds')
     return numx, numy, numz
 
 def lasertime(laserfilename):
@@ -150,6 +157,7 @@ def lasertime(laserfilename):
         This output is the time data for the electric field in atomic 
         units.
     """
+    start = time.process_time()
     file_handle = open(laserfilename, mode='r')
     filedata = []
     
@@ -167,6 +175,8 @@ def lasertime(laserfilename):
     # extract only time information from file
     for i in range(len(data)):
         timedata.append(data[i].split()[1])
+        
+    print(str(time.process_time() - start) + ' seconds')
     
     return timedata
 
@@ -190,7 +200,7 @@ def laserdata(laserfilename, polarization):
         This output is the field amplitude data for the electric field in atomic 
         units.
     """
-    
+    start = time.process_time()
     file_handle = open(laserfilename, mode='r')
     filedata = []
     
@@ -215,5 +225,6 @@ def laserdata(laserfilename, polarization):
     # extract only laser information from file
     for i in range(len(data)):
         ampdata.append(data[i].split()[pol])
-        
+    
+    print(str(time.process_time() - start) + ' seconds')
     return ampdata
