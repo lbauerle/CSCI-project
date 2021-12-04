@@ -150,10 +150,27 @@ def lasertime(laserfilename):
         This output is the time data for the electric field in atomic 
         units.
     """
+    file_handle = open(laserfilename, mode='r')
+    filedata = []
     
-    return lasertime
+    for line in file_handle:
+        new_line = line.strip()
+        filedata.append(new_line)
+    file_handle.close()
+    
+    start = 6              # line number where data starts
+    end = len(filedata)    # line number where data ends
+    
+    data = filedata[start:end]
+    timedata = []
+    
+    # extract only time information from file
+    for i in range(len(data)):
+        timedata.append(data[i].split()[1])
+    
+    return timedata
 
-def laserdata(laserfilename):
+def laserdata(laserfilename, polarization):
     """
     This function extracts the time information for the laser output from 
     Octopus.
@@ -162,12 +179,41 @@ def laserdata(laserfilename):
     ------------------
     laserfilename : string
         This input is the full path of the laser file from octopus.
+
+    polarization : string
+        This input denotes the polarization direction of the laser field. 
+        Options are 'x', 'y', and 'z'.
     
     Returns
     ------------------
-    laserdata : array
+    ampdata : array
         This output is the field amplitude data for the electric field in atomic 
         units.
     """
     
-    return laserdata
+    file_handle = open(laserfilename, mode='r')
+    filedata = []
+    
+    for line in file_handle:
+        new_line = line.strip()
+        filedata.append(new_line)
+    file_handle.close()
+    
+    start = 6              # line number where data starts
+    end = len(filedata)    # line number where data ends
+    
+    data = filedata[start:end]
+    ampdata = []
+    
+    if polarization == 'x':
+        pol = 2
+    elif polarization == 'y':
+        pol = 3
+    elif polarization == 'z':
+        pol = 4
+    
+    # extract only laser information from file
+    for i in range(len(data)):
+        ampdata.append(data[i].split()[pol])
+        
+    return ampdata
