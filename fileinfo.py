@@ -57,24 +57,13 @@ def gridsize(densfilename):
         symmetric axes. A symmetric z-axis would have values ranging from 
         +/- sizez.
     """
-    start1 = time.time()
     file_handle = open(densfilename, mode='r')
     sizeline = file_handle.readlines()[1]
     data = sizeline.split()
     sizex = abs(float(data[1]))
     sizey = abs(float(data[2]))
     sizez = abs(float(data[3]))
-    print(str(time.time() - start1) + ' seconds')
-    
-    start2 = time.time()
-    sizex2 = np.genfromtxt(densfilename, max_rows = 1, dtype = int, 
-                           usecols = 8, delimiter = ' ')
-    sizey2 = np.genfromtxt(densfilename, max_rows = 1, dtype = int, 
-                           usecols = 12, delimiter = ' ')
-    sizez2 = np.genfromtxt(densfilename, max_rows = 1, dtype = int, 
-                           usecols = 16, delimiter = ' ')
-    print(str(time.time() - start2) + ' seconds')
-    
+   
     return sizex, sizey, sizez
 
 def gridspacing(densfilename):
