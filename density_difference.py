@@ -22,6 +22,8 @@ def density_difference(dens_data1, dens_data2, integration_type, grid_spacing):
     return densdata_xy
         
     
+    
+    
 def density_difference_plot(directory, index, xx, yy, densdata_xy):
     """
     density_difference_plot plots the difference in the densities
@@ -46,7 +48,9 @@ def density_difference_plot(directory, index, xx, yy, densdata_xy):
     plt.show()
     
     
-"""def density_difference_calc():
+    
+    
+def density_difference_calc():
     
     directory = "./13CHD/output_iter/"
     density_file = f'{directory}/td.0000000/density.dx'
@@ -80,45 +84,15 @@ def density_difference_plot(directory, index, xx, yy, densdata_xy):
         dens_data2 = np.reshape(dens_data2,(size_x, size_y, size_z))
     
         densdata_xy = density_difference(dens_data, dens_data2, "riemann", dz)
-        density_difference_plot(directory, i, xx, yy, densdata_xy)"""
-        
+        density_difference_plot(directory, i, xx, yy, densdata_xy)
+       
+    
+    
         
 def main():
-    #density_difference_calc()
+    density_difference_calc()
     
-    directory = "./13CHD/output_iter/"
-    density_file = f'{directory}/td.0000000/density.dx'
     
-    size_x, size_y, size_z = fi.numgridpoints(density_file)
-
-    # needed to do this for the code to run! Should I change this in the fileinfo.py file?
-    size_x = int(size_x)
-    size_y = int(size_y)
-    size_z = int(size_z)
-
-    dx, dy, dz = fi.gridspacing(density_file)
-    num_x, num_y, num_z = fi.numgridpoints(density_file)
-    
-    raw_density_data = np.genfromtxt(density_file,skip_header=7,skip_footer=5)
-    dens_data_temp = np.array(raw_density_data) 
-    dens_data = np.reshape(dens_data_temp,(size_x, size_y, size_z))
-    
-    x = [np.linspace(-39.9, 39.9, num = size_x)]
-    y = [np.linspace(-39.9, 39.9, num = size_y)]
-    xx, yy = np.meshgrid(x, y)
-    
-    # looping through the data files; for now we will just work with one file
-    for i in range(0, 100, 101):
-        print('working on iteration ' + str(i))
-        ii = str(i)
-        iii = ii.zfill(7)
-        Density2 = f'{directory}/td.{iii}/density.dx'
-        densdata2 = np.genfromtxt(Density2,skip_header=7,skip_footer=5)
-        dens_data2 = np.array(densdata2)
-        dens_data2 = np.reshape(dens_data2,(size_x, size_y, size_z))
-    
-        densdata_xy = density_difference(dens_data, dens_data2, "riemann", dz)
-        density_difference_plot(directory, i, xx, yy, densdata_xy)
     
         
 if __name__ == '__main__':
