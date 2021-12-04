@@ -31,6 +31,11 @@ def densitydata(densfilename):
     densdata = np.asarray(filedata[start:end])
     print(str(time.process_time() - start) + ' seconds')
     
+    start2 = time.process_time()
+    densdata2 = np.genfromtxt(densfilename, skip_header=7, skip_footer=5)
+    densdata2 = np.array(densdata2)
+    print(str(time.process_time() - start2) + ' seconds')
+    
     return densdata
 
 def gridsize(densfilename):
