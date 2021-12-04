@@ -118,7 +118,7 @@ def numgridpoints(densfilename):
         This output is the number of points in the x-directions.
     
     numy : int
-        This output is the number of pointsg in the x-direction.
+        This output is the number of points in the x-direction.
 
     numz : int
         This output is the number of points in the x-direction.
