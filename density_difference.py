@@ -42,22 +42,66 @@ def density_difference_plot(index, xx, yy, densdata_xy):
     plt.savefig(f'{directory}/iteration3D-0000{iii}.png')
     plt.show()
     
+    
+def density_difference(directory = "./13CHD/output_iter/"):
+    
+    density_file = f'{directory}/td.0000000/density.dx'
+    
+    size_x, size_y, size_z = fi.numgridpoints(density_file)
+
+    # needed to do this for the code to run! Should I change this in the fileinfo.py file?
+    size_x = int(size_x)
+    size_y = int(size_y)
+    size_z = int(size_z)
+
+    dx, dy, dz = fi.gridspacing(density_file)
+    num_x, num_y, num_z = fi.numgridpoints(density_file)
+    
+    raw_density_data = np.genfromtxt(density_file,skip_header=7,skip_footer=5)
+    dens_data_temp = np.array(raw_density_data) 
+    dens_data = np.reshape(dens_data_temp,(size_x, size_y, size_z))
+    
+    x = [np.linspace(-39.9, 39.9, num = size_x)]
+    y = [np.linspace(-39.9, 39.9, num = size_y)]
+    xx, yy = np.meshgrid(x, y)
+    
+    # looping through the data files; for now we will just work with one file
+    for i in range(0, 100, 100):
+        print('working on iteration ' + str(i))
+        ii = str(i)
+        iii = ii.zfill(7)
+        Density2 = f'{directory}/td.{iii}/density.dx'
+        densdata2 = np.genfromtxt(Density2,skip_header=7,skip_footer=5)
+        dens_data2 = np.array(densdata2)
+        dens_data2 = np.reshape(dens_data2,(size_x, size_y, size_z))
+    
+        densdata_xy = density_difference(dens_data, dens_data2, "riemann", dz)
+        density_difference_plot(i, xx, yy, densdata_xy)
+        
+        
+def main():
+    density_difference()
+    
+        
+if __name__ == '__main__':
+    main()
+    
         
 
 # denote where files are coming from
-directory = './13CHD/output_iter/'
-density_file = f'{directory}/td.0000000/density.dx'
+#directory = './13CHD/output_iter/'
+#density_file = f'{directory}/td.0000000/density.dx'
 
 
-size_x, size_y, size_z = fi.numgridpoints(density_file)
+#size_x, size_y, size_z = fi.numgridpoints(density_file)
 
 # needed to do this for the code to run! Should I change this in the fileinfo.py file?
-size_x = int(size_x)
-size_y = int(size_y)
-size_z = int(size_z)
+#size_x = int(size_x)
+#size_y = int(size_y)
+#size_z = int(size_z)
 
-dx, dy, dz = fi.gridspacing(density_file)
-num_x, num_y, num_z = fi.numgridpoints(density_file)
+#dx, dy, dz = fi.gridspacing(density_file)
+#num_x, num_y, num_z = fi.numgridpoints(density_file)
 
 # number of points in x, y, and z dimensions as well as grid spacing, dz
 #SizeX = np.genfromtxt(Density1, max_rows = 1, dtype = int, usecols = 8, delimiter = ' ')
@@ -66,23 +110,23 @@ num_x, num_y, num_z = fi.numgridpoints(density_file)
 #dz = 0.3
 
 # formatting
-densdata = np.genfromtxt(density_file,skip_header=7,skip_footer=5)
-dens_data = np.array(densdata) #, dtype = np.uint8)
-dens_data = np.reshape(dens_data,(size_x, size_y, size_z))
-x = [np.linspace(-39.9, 39.9, num = size_x)]
-y = [np.linspace(-39.9, 39.9, num = size_y)]
-xx, yy = np.meshgrid(x, y)
+#densdata = np.genfromtxt(density_file,skip_header=7,skip_footer=5)
+#dens_data = np.array(densdata) #, dtype = np.uint8)
+#dens_data = np.reshape(dens_data,(size_x, size_y, size_z))
+#x = [np.linspace(-39.9, 39.9, num = size_x)]
+#y = [np.linspace(-39.9, 39.9, num = size_y)]
+#xx, yy = np.meshgrid(x, y)
 
 
 # looping through the data files; for now we will just work with one file
-for i in range(0, 100, 100):
-    print('working on iteration ' + str(i))
-    ii = str(i)
-    iii = ii.zfill(7)
-    Density2 = f'{directory}/td.{iii}/density.dx'
-    densdata2 = np.genfromtxt(Density2,skip_header=7,skip_footer=5)
-    dens_data2 = np.array(densdata2)
-    dens_data2 = np.reshape(dens_data2,(size_x, size_y, size_z))
+#for i in range(0, 100, 100):
+#    print('working on iteration ' + str(i))
+#    ii = str(i)
+#    iii = ii.zfill(7)
+#    Density2 = f'{directory}/td.{iii}/density.dx'
+#    densdata2 = np.genfromtxt(Density2,skip_header=7,skip_footer=5)
+#    dens_data2 = np.array(densdata2)
+#    dens_data2 = np.reshape(dens_data2,(size_x, size_y, size_z))
     
-    densdata_xy = density_difference(dens_data, dens_data2, "riemann", dz)
-    density_difference_plot(i, xx, yy, densdata_xy)
+#    densdata_xy = density_difference(dens_data, dens_data2, "riemann", dz)
+#    density_difference_plot(i, xx, yy, densdata_xy)
