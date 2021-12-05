@@ -30,7 +30,7 @@ def density_data(density_file_name):
     # get rid of footer
     end = len(file_data) - 5
 
-    density_data = np.asarray(file_data[start:end])
+    density_data = np.asarray(file_data[start:end], float)
 
     return density_data
 
