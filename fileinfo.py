@@ -4,12 +4,10 @@ import numpy as np
 def density_data(density_file_name):
     """
     This function extracts the values from a grid-based density file.
-
     Parameters
     ------------------
     density_file_name : string
         This input is the full path of the .dx file from which to get data.
-
     Returns
     ------------------
     density_data : array
@@ -30,7 +28,7 @@ def density_data(density_file_name):
     # get rid of footer
     end = len(file_data) - 5
 
-    density_data = np.asarray(file_data[start:end])
+    density_data = np.asarray(file_data[start:end], float)
 
     return density_data
 
@@ -38,24 +36,20 @@ def density_data(density_file_name):
 def grid_size(density_file_name):
     """
     This function extracts the size of the grid from a .dx file type.
-
     Parameters
     ------------------
     density_file_name : string
         This input is the full path of the .dx file from which to get data.
-
     Returns
     ------------------
     size_x : float
         This is the size maximum value of the grid along the x-axis for
         symmetric axes. A symmetric x-axis would have values ranging from
         +/- size_x.
-
     size_y : float
         This is the size maximum value of the grid along the y-axis for
         symmetric axes. A symmetric y-axis would have values ranging from
         +/- size_y.
-
     size_z : float
         This is the size maximum value of the grid along the z-axis for
         symmetric axes. A symmetric z-axis would have values ranging from
@@ -76,20 +70,16 @@ def grid_spacing(density_file_name):
     """
     This function extracts the spacing of points in each axis of the grid
     from a .dx file type.
-
     Parameters
     ------------------
     density_file_name : string
         This input is the full path of the .dx file from which to get data.
-
     Returns
     ------------------
     dx : float
         This output is the grid spacing in the x-direction.
-
     dy : float
         This output is the grid spacing in the x-direction.
-
     dz : float
         This output is the grid spacing in the x-direction.
     """
@@ -112,20 +102,16 @@ def grid_spacing(density_file_name):
 def num_grid_points(density_file_name):
     """
     This function extracts the number of points in each cartesian direction.
-
     Parameters
     ------------------
     density_file_name : string
         This input is the full path of the .dx file from which to get data.
-
     Returns
     ------------------
     num_x : int
         This output is the number of points in the x-directions.
-
     num_y : int
         This output is the number of pointsg in the x-direction.
-
     num_z : int
         This output is the number of points in the x-direction.
     """
@@ -134,9 +120,9 @@ def num_grid_points(density_file_name):
     size_line = file_handle.readlines()[0]
     data = size_line.split()
 
-    num_x = data[5]
-    num_z = data[6]
-    num_y = data[7]
+    num_x = int(data[5])
+    num_z = int(data[6])
+    num_y = int(data[7])
 
     return num_x, num_y, num_z
 
@@ -145,12 +131,10 @@ def laser_time(laser_file_name):
     """
     This function extracts the time information for the laser output from
     Octopus.
-
     Parameters
     ------------------
     laser_file_name : string
         This input is the full path of the laser file from octopus.
-
     Returns
     ------------------
     lasertime : array
@@ -185,16 +169,13 @@ def laser_data(laser_file_name, polarization):
     """
     This function extracts the time information for the laser output from
     Octopus.
-
     Parameters
     ------------------
     laser_file_name : string
         This input is the full path of the laser file from octopus.
-
     polarization : string
         This input denotes the polarization direction of the laser field.
         Options are 'x', 'y', and 'z'.
-
     Returns
     ------------------
     amplitude_data : array
