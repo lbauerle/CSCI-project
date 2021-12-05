@@ -134,9 +134,9 @@ def num_grid_points(density_file_name):
     size_line = file_handle.readlines()[0]
     data = size_line.split()
 
-    num_x = data[5]
-    num_z = data[6]
-    num_y = data[7]
+    num_x = int(data[5])
+    num_z = int(data[6])
+    num_y = int(data[7])
 
     return num_x, num_y, num_z
 
