@@ -101,7 +101,7 @@ def density_difference_laser_plot(directory, laser_file_name, polarization, inde
     ax2.set_ylabel('amplitude [a.u.]')
     
     # save figure
-    plt.savefig(f'{directory}/iteration3D-laser-0000{iii}.png')
+    plt.savefig(f'{directory}/iteration3D-laser-0000{iii}.png', bbox_inches='tight')
     plt.show()
     
 
