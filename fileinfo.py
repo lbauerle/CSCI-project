@@ -88,10 +88,10 @@ def grid_spacing(density_file_name):
         This output is the grid spacing in the x-direction.
 
     dy : float
-        This output is the grid spacing in the x-direction.
+        This output is the grid spacing in the y-direction.
 
     dz : float
-        This output is the grid spacing in the x-direction.
+        This output is the grid spacing in the z-direction.
     """
 
     file_handle = open(density_file_name, mode='r')
