@@ -88,10 +88,10 @@ def grid_spacing(density_file_name):
         This output is the grid spacing in the x-direction.
 
     dy : float
-        This output is the grid spacing in the x-direction.
+        This output is the grid spacing in the y-direction.
 
     dz : float
-        This output is the grid spacing in the x-direction.
+        This output is the grid spacing in the z-direction.
     """
 
     file_handle = open(density_file_name, mode='r')
@@ -124,10 +124,10 @@ def num_grid_points(density_file_name):
         This output is the number of points in the x-directions.
 
     num_y : int
-        This output is the number of pointsg in the x-direction.
+        This output is the number of pointsg in the y-direction.
 
     num_z : int
-        This output is the number of points in the x-direction.
+        This output is the number of points in the z-direction.
     """
 
     file_handle = open(density_file_name, mode='r')
@@ -135,8 +135,8 @@ def num_grid_points(density_file_name):
     data = size_line.split()
 
     num_x = int(data[5])
-    num_z = int(data[6])
-    num_y = int(data[7])
+    num_y = int(data[6])
+    num_z = int(data[7])
 
     return num_x, num_y, num_z
 
