@@ -76,18 +76,18 @@ def density_difference_laser_plot(directory, laser_file_name, polarization, inde
     # laser subplot
     ax2 = fig.add_subplot(gs[0,0])
     
-    #plotting density difference
+    # plotting density difference
     levels = np.linspace(-1E-3, 1E-3, 1000)
     CS = plt.contourf(xx, yy, densdata_xy, levels=levels, cmap='seismic', extend='both')
-    
-    # plot formatting
+    plt.tick_params(which='both',top=False,right=False)
     colorbar = plt.colorbar(CS, label=r'intensity (arb. units)')
-    plt.xlim((-10,10))
-    plt.ylim((-10,10))
-    plt.xlabel('y [a.u.]')
-    plt.ylabel('x [a.u.]')
-    plt.title('Density Difference Along x-y Plane \n time = %.2f' % (int(i)*.02) + ' a.u.' )
-    plt.savefig(f'{directory}/iteration3D-0000{iii}.png')
+    ax1.set_ylim((-10,10))
+    ax1.set_xlabel('y [a.u.]')
+    ax1.set_ylabel('x [a.u.]')
+    ax1.title.set_text('Density Difference Along x-y Plane' )
+    
+    # save figure
+    plt.savefig(f'{directory}/iteration3D-laser-0000{iii}.png')
     plt.show()
     
 
