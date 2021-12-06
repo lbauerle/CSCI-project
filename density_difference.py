@@ -83,9 +83,6 @@ def density_difference_calc():
         dens_data2 = fi.density_data(Density2)
         dens_data2 = np.reshape(dens_data2, (num_x, num_y, num_z))
 
-        # densdata2 = np.genfromtxt(Density2, skip_header=7, skip_footer=5)
-        # dens_data2 = np.array(densdata2)
-
         densdata_xy = density_difference(dens_data, dens_data2, "riemann", dz)
         density_difference_plot(directory, i, xx, yy, densdata_xy)
 
