@@ -46,7 +46,7 @@ def density_difference_plot(directory, index, xx, yy, densdata_xy):
     plt.show()
     
 
-def density_difference_laser_plot(directory, index, xx, yy, densdata_xy):
+def density_difference_laser_plot(directory, laser_file_name, polarization, index, xx, yy, densdata_xy):
     """
     This function plots the density difference with the laser and point
     during the pulse at which the density difference is taken.
@@ -60,6 +60,8 @@ def density_difference_laser_plot(directory, index, xx, yy, densdata_xy):
     ------------------
 
     """
+    laser_amplitude = fi.laser_data(laser_file_name, polarization)
+    laser_time = fi.laser_time(laser_file_name)
     
     i = index
     ii = str(i)
@@ -121,6 +123,7 @@ def density_difference_calc():
         
         densdata_xy = density_difference(dens_data, dens_data2, "riemann", dz)
         density_difference_plot(directory, i, xx, yy, densdata_xy)
+        density_difference_laser_plot(directory, i, xx, yy, densdata_xy)
        
     
     
