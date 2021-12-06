@@ -83,7 +83,7 @@ def density_difference_laser_plot(directory, laser_file_name, polarization, inde
     
     # plotting density difference
     levels = np.linspace(-1E-3, 1E-3, 1000)
-    CS = plt.contourf(xx, yy, densdata_xy, levels=levels, cmap='seismic', extend='both')
+    CS = ax1.contourf(xx, yy, densdata_xy, levels=levels, cmap='seismic', extend='both')
     plt.tick_params(which='both',top=False,right=False)
     colorbar = plt.colorbar(CS, label=r'intensity (arb. units)', cax=axins)
     ax1.set_ylim((-10,10))
@@ -95,7 +95,7 @@ def density_difference_laser_plot(directory, laser_file_name, polarization, inde
     # plotting laser
     ax2.set_autoscalex_on(False)
     ax2.plot(laser_time,laser_amplitude,'k')
-    ax2.plot(laser_time[i],laser_amplitude[i],marker = 'X',color = 'r')
+    ax2.plot(laser_time[i],laser_amplitude[i], marker = 'X', color = 'r')
     ax2.set_xlim((0,max(laser_time)))
     ax2.set_ylim((-max(laser_amplitude)-0.001,max(laser_amplitude)+0.001))
     ax2.set_xlabel('time [a.u.]')
