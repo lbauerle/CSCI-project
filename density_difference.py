@@ -18,6 +18,7 @@ def density_difference(dens_data1, dens_data2, integration_type, grid_spacing):
     if (integration_type == "riemann"):
         int_type = 2
         densdata_tot = dens_data2 - dens_data1
+        #densdata_xy = np.cumsum(densdata_tot,axis=1) 
         densdata_xy = densdata_tot.sum(axis=int_type)*grid_spacing
         
     return densdata_xy
@@ -58,24 +59,22 @@ def density_difference_calc():
     num_x, num_y, num_z = fi.num_grid_points(density_file)
     size_x, size_y, size_z = fi.grid_size(density_file)
 
-    # needed to do this for the code to run! Should I change this in the fileinfo.py file?
-    num_x = int(num_x)
-    num_y = int(num_y)
-    num_z = int(num_z)
-
     dx, dy, dz = fi.grid_spacing(density_file)
-    #num_x, num_y, num_z = fi.numgridpoints(density_file)
     
     raw_density_data = np.genfromtxt(density_file, skip_header=7, skip_footer=5)
     dens_data_temp = np.array(raw_density_data) 
     dens_data = np.reshape(dens_data_temp,(num_x, num_y, num_z))
     
-    x = [np.linspace(-size_x, size_x, num = num_x)]
-    y = [np.linspace(-size_y, size_y, num = num_y)]
-    xx, yy = np.meshgrid(x, y)
+    #x = [np.linspace(-size_x, size_x, num = num_x)]
+    #y = [np.linspace(-size_y, size_y, num = num_y)]
+    x = np.linspace(-size_x, size_x, num_x)
+    y = np.linspace(-size_y, size_y, num_y)
+    #x = np.arange(-size_x, size_x, num_x)
+    #y = np.arange(-size_y, size_y, num_y)
+    [xx, yy] = np.meshgrid(x, y)
     
     # looping through the data files; for now we will just work with one file
-    for i in range(0, 100, 100):
+    for i in range(0, 100, 101):
         print('working on iteration ' + str(i))
         ii = str(i)
         iii = ii.zfill(7)
@@ -88,8 +87,11 @@ def density_difference_calc():
         
         densdata_xy = density_difference(dens_data, dens_data2, "riemann", dz)
         density_difference_plot(directory, i, xx, yy, densdata_xy)
+        print(densdata_xy.shape)
+        print(dens_data.shape)
+        print(dens_data2.shape)
        
-    
+    #return print(len(x), len(y))
     
     
 def main():
