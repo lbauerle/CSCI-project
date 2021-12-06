@@ -87,6 +87,7 @@ def density_difference_laser_plot(directory, laser_file_name, polarization, inde
     plt.tick_params(which='both',top=False,right=False)
     colorbar = plt.colorbar(CS, label=r'intensity (arb. units)', cax=axins)
     ax1.set_ylim((-10,10))
+    ax1.set_xlim((-10,10))
     ax1.set_xlabel('y [a.u.]')
     ax1.set_ylabel('x [a.u.]')
     ax1.title.set_text('Density Difference Along x-y Plane' )
