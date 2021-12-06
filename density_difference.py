@@ -91,9 +91,9 @@ def density_difference_laser_plot(directory, laser_file_name, polarization, inde
     
     # plotting laser
     ax2.set_autoscalex_on(False)
-    ax2.plot(timedata,laserdata,'k')
-    ax2.set_xlim((0,max(timedata)))
-    ax2.set_ylim((-max(laserdata)-0.001,max(laserdata)+0.001))
+    ax2.plot(laser_time,laser_amplitude,'k')
+    ax2.set_xlim((0,max(laser_time)))
+    ax2.set_ylim((-max(laser_amplitude)-0.001,max(laser_amplitude)+0.001))
     ax2.set_xlabel('time [a.u.]')
     ax2.set_ylabel('amplitude [a.u.]')
     
