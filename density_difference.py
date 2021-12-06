@@ -89,6 +89,14 @@ def density_difference_laser_plot(directory, laser_file_name, polarization, inde
     ax1.set_ylabel('x [a.u.]')
     ax1.title.set_text('Density Difference Along x-y Plane' )
     
+    # plotting laser
+    ax2.set_autoscalex_on(False)
+    ax2.plot(timedata,laserdata,'k')
+    ax2.set_xlim((0,max(timedata)))
+    ax2.set_ylim((-max(laserdata)-0.001,max(laserdata)+0.001))
+    ax2.set_xlabel('time [a.u.]')
+    ax2.set_ylabel('amplitude [a.u.]')
+    
     # save figure
     plt.savefig(f'{directory}/iteration3D-laser-0000{iii}.png')
     plt.show()
