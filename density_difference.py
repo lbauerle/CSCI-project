@@ -2,6 +2,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import fileinfo as fi
+import matplotlib as mpl
+from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 
 
 def density_difference(dens_data1, dens_data2,
@@ -85,7 +87,65 @@ def density_difference_plot(directory, index, xx, yy, densdata_xy):
               % (int(i) * .02) + ' a.u.')
     plt.savefig(f'{directory}/iteration3D-0000{iii}.png')
     plt.show()
+    
+    
+def density_difference_laser_plot(directory, laser_file_name, polarization, index, xx, yy, densdata_xy):
+    """
+    This function plots the density difference with the laser and point
+    during the pulse at which the density difference is taken.
+    Parameters
+    ------------------
+    density_file_name : string
+        This input is the full path of the .dx file from which to get data.
+    laser_file_name : string
+        This input is the full path of the laser file from which to get data.
+    Returns
+    ------------------
 
+    """
+    # get laser information
+    laser_amplitude = fi.laser_data(laser_file_name, polarization)
+    laser_time = fi.laser_time(laser_file_name)
+    
+    # index formatting for iterations
+    i = index
+    ii = str(i)
+    iii = ii.zfill(7)
+    
+    # make figure with subplots
+    fig = plt.figure(figsize = (15,20))
+    gs = mpl.gridspec.GridSpec(2,1, height_ratios=[1,2], width_ratios=[2])
+    # density difference subplot
+    ax1 = fig.add_subplot(gs[1,0])
+    # laser subplot
+    ax2 = fig.add_subplot(gs[0,0])
+    axins = inset_axes(ax1, width='5%', height='100%', loc=6, bbox_to_anchor=(1.05,0.,1,1),
+                       bbox_transform=ax1.transAxes, borderpad=0)
+    
+    # plotting density difference
+    levels = np.linspace(-1E-3, 1E-3, 1000)
+    CS = ax1.contourf(xx, yy, densdata_xy, levels=levels, cmap='seismic', extend='both')
+    plt.tick_params(which='both',top=False,right=False)
+    colorbar = plt.colorbar(CS, label=r'intensity (arb. units)', cax=axins)
+    ax1.set_ylim((-10,10))
+    ax1.set_xlim((-10,10))
+    ax1.set_xlabel('y [a.u.]')
+    ax1.set_ylabel('x [a.u.]')
+    ax1.title.set_text('Density Difference Along x-y Plane' )
+    
+    # plotting laser
+    ax2.set_autoscalex_on(False)
+    ax2.plot(laser_time,laser_amplitude,'k')
+    ax2.plot(laser_time[i],laser_amplitude[i], marker = 'X', color = 'r')
+    ax2.set_xlim((0,max(laser_time)))
+    ax2.set_ylim((-max(laser_amplitude)-0.001,max(laser_amplitude)+0.001))
+    ax2.set_xlabel('time [a.u.]')
+    ax2.set_ylabel('amplitude [a.u.]')
+    
+    # save figure
+    plt.savefig(f'{directory}/iteration3D-laser-0000{iii}.png', bbox_inches='tight')
+    plt.show()
+    
 
 def density_difference_calc():
     """
@@ -131,8 +191,9 @@ def density_difference_calc():
 
         densdata_xy = density_difference(dens_data, dens_data2, "riemann", dz)
         density_difference_plot(directory, i, xx, yy, densdata_xy)
-
-
+        density_difference_laser_plot(directory, '/home/jovyan/CSCI-project/laser','x', i, xx, yy, densdata_xy)
+       
+    
 def main():
     density_difference_calc()
 
