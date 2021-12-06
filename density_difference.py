@@ -83,9 +83,9 @@ def density_difference_laser_plot(directory, laser_file_name, polarization, inde
     
     # plotting density difference
     levels = np.linspace(-1E-3, 1E-3, 1000)
-    CS = plt.contourf(xx, yy, densdata_xy, levels=levels, cmap='seismic', extend='both', cax=axins)
+    CS = plt.contourf(xx, yy, densdata_xy, levels=levels, cmap='seismic', extend='both')
     plt.tick_params(which='both',top=False,right=False)
-    colorbar = plt.colorbar(CS, label=r'intensity (arb. units)')
+    colorbar = plt.colorbar(CS, label=r'intensity (arb. units)', cax=axins)
     ax1.set_ylim((-10,10))
     ax1.set_xlabel('y [a.u.]')
     ax1.set_ylabel('x [a.u.]')
