@@ -37,8 +37,8 @@ def density_difference_plot(directory, index, xx, yy, densdata_xy):
     
     # plot formatting
     colorbar = plt.colorbar(CS, label=r'intensity (arb. units)')
-    plt.xlim((-20,20))
-    plt.ylim((-20,20))
+    plt.xlim((-10,10))
+    plt.ylim((-10,10))
     plt.xlabel('y [a.u.]')
     plt.ylabel('x [a.u.]')
     plt.title('Density Difference Along x-y Plane \n time = %.2f' % (int(i)*.02) + ' a.u.' )
@@ -75,7 +75,7 @@ def density_difference_calc():
     xx, yy = np.meshgrid(x, y)
     
     # looping through the data files; for now we will just work with one file
-    for i in range(0, 100, 100):
+    for i in range(0, 300, 200):
         print('working on iteration ' + str(i))
         ii = str(i)
         iii = ii.zfill(7)
