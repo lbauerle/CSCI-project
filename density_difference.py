@@ -2,6 +2,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import fileinfo as fi
+import matplotlib as mpl
+from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 
 
 def density_difference(dens_data1, dens_data2, integration_type, grid_spacing):
@@ -71,6 +73,7 @@ def density_difference_laser_plot(directory, laser_file_name, polarization, inde
     
     # make figure with subplots
     fig = plt.figure(figsize = (15,20))
+    gs = mpl.gridspec.GridSpec(2,1, height_ratios=[1,2], width_ratios=[2])
     # density difference subplot
     ax1 = fig.add_subplot(gs[1,0])
     # laser subplot
@@ -133,7 +136,7 @@ def density_difference_calc():
         
         densdata_xy = density_difference(dens_data, dens_data2, "riemann", dz)
         density_difference_plot(directory, i, xx, yy, densdata_xy)
-        density_difference_laser_plot(directory, i, xx, yy, densdata_xy)
+        density_difference_laser_plot(directory, '/home/jovyan/CSCI-project/laser','x', i, xx, yy, densdata_xy)
        
     
     
