@@ -4,9 +4,10 @@ import matplotlib.pyplot as plt
 import fileinfo as fi
 
 
-def density_difference(dens_data1, dens_data2, integration_type="riemann", grid_spacing):
+def density_difference(dens_data1, dens_data2,
+                       integration_type="riemann", grid_spacing):
     """
-    This function computes the difference between two density files, with a 
+    This function computes the difference between two density files, with a
     specified integration type: Riemann integral, trapezoidal rule, etc.
     ------------------
     dens_data1 : numpy 67 x 37 x 67 array
@@ -47,7 +48,8 @@ def density_difference_plot(directory, index, xx, yy, densdata_xy):
     iii = ii.zfill(7)
     plt.figure()
     levels = np.linspace(-1E-3, 1E-3, 1000)
-    CS = plt.contourf(xx, yy, densdata_xy, levels=levels, cmap='seismic', extend='both')
+    CS = plt.contourf(xx, yy, densdata_xy, levels=levels,
+                      cmap='seismic', extend='both')
 
     # plot formatting
     colorbar = plt.colorbar(CS, label=r'intensity (arb. units)')
@@ -55,7 +57,8 @@ def density_difference_plot(directory, index, xx, yy, densdata_xy):
     plt.ylim((-10, 10))
     plt.xlabel('y [a.u.]')
     plt.ylabel('x [a.u.]')
-    plt.title('Density Difference Along x-y Plane \n time = %.2f' % (int(i) * .02) + ' a.u.')
+    plt.title('Density Difference Along x-y Plane \n time = %.2f'
+              % (int(i) * .02) + ' a.u.')
     plt.savefig(f'{directory}/iteration3D-0000{iii}.png')
     plt.show()
 
@@ -72,15 +75,11 @@ def density_difference_calc():
     num_x, num_y, num_z = fi.num_grid_points(density_file)
     size_x, size_y, size_z = fi.grid_size(density_file)
 
-    # needed to do this for the code to run! Should I change this in the fileinfo.py file?
-    num_x = int(num_x)
-    num_y = int(num_y)
-    num_z = int(num_z)
-
     dx, dy, dz = fi.grid_spacing(density_file)
     # num_x, num_y, num_z = fi.numgridpoints(density_file)
 
-    raw_density_data = np.genfromtxt(density_file, skip_header=7, skip_footer=5)
+    raw_density_data = np.genfromtxt(density_file,
+                                     skip_header=7, skip_footer=5)
     dens_data_temp = np.array(raw_density_data)
     dens_data = np.reshape(dens_data_temp, (num_x, num_y, num_z))
 
@@ -88,7 +87,7 @@ def density_difference_calc():
     y = [np.linspace(-size_y, size_y, num=num_y)]
     xx, yy = np.meshgrid(x, y)
 
-    # looping through the data files; for now we will just work with one file
+    # looping through the data files
     for i in range(0, 300, 200):
         print('working on iteration ' + str(i))
         ii = str(i)
