@@ -52,7 +52,7 @@ def density_difference_calc():
     Returns
     """
     
-    directory = "./13CHD/output_iter/"
+    directory = "./N2+/output_iter/"
     density_file = f'{directory}/td.0000000/density.dx'
     
     num_x, num_y, num_z = fi.num_grid_points(density_file)
