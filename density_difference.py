@@ -45,7 +45,40 @@ def density_difference_plot(directory, index, xx, yy, densdata_xy):
     plt.savefig(f'{directory}/iteration3D-0000{iii}.png')
     plt.show()
     
+
+def density_difference_laser_plot(directory, index, xx, yy, densdata_xy):
+    """
+    This function plots the density difference with the laser and point
+    during the pulse at which the density difference is taken.
+    Parameters
+    ------------------
+    density_file_name : string
+        This input is the full path of the .dx file from which to get data.
+    laser_file_name : string
+        This input is the full path of the laser file from which to get data.
+    Returns
+    ------------------
+
+    """
     
+    i = index
+    ii = str(i)
+    iii = ii.zfill(7)
+    plt.figure()
+    levels = np.linspace(-1E-3, 1E-3, 1000)
+    CS = plt.contourf(xx, yy, densdata_xy, levels=levels, cmap='seismic', extend='both')
+    
+    # plot formatting
+    colorbar = plt.colorbar(CS, label=r'intensity (arb. units)')
+    plt.xlim((-10,10))
+    plt.ylim((-10,10))
+    plt.xlabel('y [a.u.]')
+    plt.ylabel('x [a.u.]')
+    plt.title('Density Difference Along x-y Plane \n time = %.2f' % (int(i)*.02) + ' a.u.' )
+    plt.savefig(f'{directory}/iteration3D-0000{iii}.png')
+    plt.show()
+    
+
 def density_difference_calc():
     """
     Inputs
