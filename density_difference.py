@@ -60,13 +60,23 @@ def density_difference_laser_plot(directory, laser_file_name, polarization, inde
     ------------------
 
     """
+    # get laser information
     laser_amplitude = fi.laser_data(laser_file_name, polarization)
     laser_time = fi.laser_time(laser_file_name)
     
+    # index formatting for iterations
     i = index
     ii = str(i)
     iii = ii.zfill(7)
-    plt.figure()
+    
+    # make figure with subplots
+    fig = plt.figure(figsize = (15,20))
+    # density difference subplot
+    ax1 = fig.add_subplot(gs[1,0])
+    # laser subplot
+    ax2 = fig.add_subplot(gs[0,0])
+    
+    #plotting density difference
     levels = np.linspace(-1E-3, 1E-3, 1000)
     CS = plt.contourf(xx, yy, densdata_xy, levels=levels, cmap='seismic', extend='both')
     
