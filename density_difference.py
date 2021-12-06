@@ -9,7 +9,9 @@ def density_difference(dens_data1, dens_data2,
     """
     This function computes the difference between two density files, with a
     specified integration type: Riemann integral, trapezoidal rule, etc.
-    ------------------
+
+    Inputs
+    ------
     dens_data1 : numpy 67 x 37 x 67 array
         array containing the reference density data
 
@@ -24,7 +26,7 @@ def density_difference(dens_data1, dens_data2,
         The separation between adjacent points on the grid.
 
     Returns
-    ------------------
+    -------
     densdata_xy : 67 x 67 array
         This contains the difference between the density and the reference
         density with the third axis integrated out.
@@ -40,7 +42,29 @@ def density_difference(dens_data1, dens_data2,
 
 def density_difference_plot(directory, index, xx, yy, densdata_xy):
     """
-    density_difference_plot plots the difference in the densities
+    This function constructs the heat maps for the differences in
+    densities on a 2-dimensional grid.
+
+    Inputs
+    ------
+    directory : String
+        directory where the plot will be stored as an output
+
+    index : Int
+        the index representing which density data file the heat map will
+        be constructed from.
+
+    xx : 2-dimensional numpy array
+        A two-dimensional array containing all of the possible x values
+
+    yy : 2-dimensional numpy arrray
+        A two-dimensional array containing all of the possible y values
+
+    Returns
+    -------
+    .png file in the specified directory
+        This will be the heat map constructed by subtracting the two
+        heat maps and integrating out the third axis.
     """
 
     i = index
@@ -65,8 +89,17 @@ def density_difference_plot(directory, index, xx, yy, densdata_xy):
 
 def density_difference_calc():
     """
+    This function calls the other two functions in the file in order
+    to create the density difference plots.
+
     Inputs
+    ------
+    directory : String
+        directory where the plot will be stored as an output
+
     Returns
+    -------
+    The density difference plot.
     """
 
     directory = "./N2+/output_iter"
