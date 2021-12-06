@@ -161,7 +161,7 @@ def laser_time(laser_file_name):
     # extract only time information from file
     for i in range(len(data)):
         time_data.append(data[i].split()[1])
-        
+
     time_data = np.array(time_data, float)
 
     return time_data
