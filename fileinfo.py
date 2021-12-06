@@ -211,6 +211,6 @@ def laser_data(laser_file_name, polarization):
     # extract only laser information from file
     for i in range(len(data)):
         amplitude_data.append(data[i].split()[pol])
-    
+
     amplitude_data = np.array(amplitude_data, float)
     return amplitude_data
