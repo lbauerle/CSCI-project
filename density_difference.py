@@ -139,6 +139,7 @@ def density_difference(dens_data1, dens_data2, integration_type, grid_spacing):
 
 
 def density_difference_plot(density_directory, index, xx, yy, densdata_xy):
+
     """
     density_difference_plot plots the difference in the densities
     """
@@ -159,6 +160,7 @@ def density_difference_plot(density_directory, index, xx, yy, densdata_xy):
     plt.ylabel('x [a.u.]')
     plt.title('Density Difference Along x-y Plane \n time = %.2f'
               % (int(i)*.02) + ' a.u.')
+
     plt.savefig(f'{density_directory}/iteration3D-0000{iii}.png')
     plt.show()
 
@@ -231,7 +233,6 @@ def density_difference_calc(density_directory):
     Inputs
     Returns
     """
-
     #directory = "./N2+/output_iter"
     density_file = f'{density_directory}/td.0000000/density.dx'
 
@@ -252,6 +253,7 @@ def density_difference_calc(density_directory):
         print('working on iteration ' + str(i))
         ii = str(i)
         iii = ii.zfill(7)
+
         Density2 = f'{density_directory}/td.{iii}/density.dx'
         dens_data2 = fi.density_data(Density2)
         dens_data2 = np.reshape(dens_data2, (num_x, num_y, num_z))
@@ -260,6 +262,7 @@ def density_difference_calc(density_directory):
         # dens_data2 = np.array(densdata2)
 
         densdata_xy = density_difference(dens_data, dens_data2, "riemann", dz)
+
         density_difference_plot(density_directory, i, xx, yy, densdata_xy)
         density_difference_laser_plot(density_directory,
                                       '/home/jovyan/CSCI-project/laser',
