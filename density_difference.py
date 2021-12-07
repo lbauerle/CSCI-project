@@ -73,7 +73,7 @@ def input_parser():
     if counter_inputs.config:
         config = configparser.ConfigParser()
         config.read("./config.ini")
-        density_file = config['DENSITY']['density_directory']
+        density_directory = config['DENSITY']['density_directory']
         max_iteration = config['DENSITY']['max_iteration']
         iteration_step = config['DENSITY']['iteration_step']
         plane = config['DENSITY']['plane']
@@ -87,11 +87,11 @@ def input_parser():
         level_max = config['PLOTTING']['level_max']
         save_directory = config['PLOTTING']['save_directory']
         
-        return density_file, laser_file, polarization, max_iteration, \
+        return density_directory, laser_file, polarization, max_iteration, \
                iteration_step, plane, integration_method, time_units, \
                cmap, level_max, save_directory
     else:
-        density_file = counter_inputs.dens
+        density_directory = counter_inputs.dens
         laser_file = counter_inputs.laser
         polarization = counter_inputs.pol
         max_iteration = counter_inputs.maxiter
@@ -102,7 +102,7 @@ def input_parser():
         cmap = counter_inputs.cmap
         level_max  = counter_inputs.level
         save_directory = counter_inputs.save
-        return density_file, laser_file, polarization, max_iteration, \
+        return density_directory, laser_file, polarization, max_iteration, \
                iteration_step, plane, integration_method, time_units, \
                cmap, level_max, save_directory
 
@@ -129,7 +129,7 @@ def density_difference(dens_data1, dens_data2, integration_type, grid_spacing):
     return densdata_xy
 
 
-def density_difference_plot(density_file, index, xx, yy, densdata_xy):
+def density_difference_plot(density_directory, index, xx, yy, densdata_xy):
     """
     density_difference_plot plots the difference in the densities
     """
@@ -150,18 +150,18 @@ def density_difference_plot(density_file, index, xx, yy, densdata_xy):
     plt.ylabel('x [a.u.]')
     plt.title('Density Difference Along x-y Plane \n time = %.2f'
               % (int(i)*.02) + ' a.u.')
-    plt.savefig(f'{density_file}/iteration3D-0000{iii}.png')
+    plt.savefig(f'{density_directory}/iteration3D-0000{iii}.png')
     plt.show()
 
 
-def density_difference_laser_plot(density_file, laser_file_name, polarization,
+def density_difference_laser_plot(density_directory, laser_file_name, polarization,
                                   index, xx, yy, densdata_xy):
     """
     This function plots the density difference with the laser and point
     during the pulse at which the density difference is taken.
     Parameters
     ------------------
-    density_file : string
+    density_directory : string
         This input is the full path of the .dx file from which to get data.
     laser_file_name : string
         This input is the full path of the laser file from which to get data.
@@ -212,7 +212,7 @@ def density_difference_laser_plot(density_file, laser_file_name, polarization,
     ax2.set_ylabel('amplitude [a.u.]')
 
     # save figure
-    plt.savefig(f'{density_file}/iteration3D-laser-0000{iii}.png',
+    plt.savefig(f'{density_directory}/iteration3D-laser-0000{iii}.png',
                 bbox_inches='tight')
     plt.show()
 
@@ -224,14 +224,13 @@ def density_difference_calc():
     """
 
     #directory = "./N2+/output_iter"
-    density_file = f'{density_file}/td.0000000/density.dx'
+    density_file = f'{density_directory}/td.0000000/density.dx'
 
     num_x, num_y, num_z = fi.num_grid_points(density_file)
     size_x, size_y, size_z = fi.grid_size(density_file)
     dx, dy, dz = fi.grid_spacing(density_file)
 
-    raw_density_data = np.genfromtxt(density_file, skip_header=7,
-                                     skip_footer=5)
+    raw_density_data = fi.density_data(density_directory)
     dens_data_temp = np.array(raw_density_data)
     dens_data = np.reshape(dens_data_temp, (num_x, num_y, num_z))
 
@@ -244,7 +243,7 @@ def density_difference_calc():
         print('working on iteration ' + str(i))
         ii = str(i)
         iii = ii.zfill(7)
-        Density2 = f'{density_file}/td.{iii}/density.dx'
+        Density2 = f'{density_directory}/td.{iii}/density.dx'
         dens_data2 = fi.density_data(Density2)
         dens_data2 = np.reshape(dens_data2, (num_x, num_y, num_z))
 
@@ -252,8 +251,8 @@ def density_difference_calc():
         # dens_data2 = np.array(densdata2)
 
         densdata_xy = density_difference(dens_data, dens_data2, "riemann", dz)
-        density_difference_plot(density_file, i, xx, yy, densdata_xy)
-        density_difference_laser_plot(density_file,
+        density_difference_plot(density_directory, i, xx, yy, densdata_xy)
+        density_difference_laser_plot(density_directory,
                                       '/home/jovyan/CSCI-project/laser',
                                       'x', i, xx, yy, densdata_xy)
 
