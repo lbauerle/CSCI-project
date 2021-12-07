@@ -118,29 +118,16 @@ def input_parser():
 
 def density_difference(dens_data1, dens_data2, integration_type, grid_spacing):
     """
-    This function computes the difference between two density files, with a
-    specified integration type: Riemann integral, trapezoidal rule, etc.
+    density_difference is the function that "integrates" out a particular axis.
 
-    Inputs
-    ------
-    dens_data1 : numpy 67 x 37 x 67 array
-        array containing the reference density data
-
-    dens_data2 : numpy 67 x 37 x 67 array
-        an array that dens_data1 will be subtracted from
-
-    integration_type : String
-        Denotes the integration type of the following possibilities:
-        The default value is "riemann" which represents a Riemann integral
-
-    grid_spacing : Float
-        The separation between adjacent points on the grid.
-
-    Returns
-    -------
-    densdata_xy : 67 x 67 array
-        This contains the difference between the density and the reference
-        density with the third axis integrated out.
+    Inputs:
+    1. dens_data1 - denotes the data you are finding the difference with
+       respect to
+    2. dens_data2 - tells you what you are subtracting from dens_data1
+    3. integration_type - denotes the type of integration that will be
+       performed
+    4. grid_spacing - tells you the length of the sub-interval that is being
+       integrated over
     """
 
     if (integration_type == "riemann"):
@@ -153,17 +140,7 @@ def density_difference(dens_data1, dens_data2, integration_type, grid_spacing):
 
 def density_difference_plot(density_directory, index, xx, yy, densdata_xy):
     """
-    This function calls the other two functions in the file in order
-    to create the density difference plots.
-
-    Inputs
-    ------
-    directory : String
-        directory where the plot will be stored as an output
-
-    Returns
-    -------
-    The density difference plot.
+    density_difference_plot plots the difference in the densities
     """
 
     i = index
@@ -182,7 +159,6 @@ def density_difference_plot(density_directory, index, xx, yy, densdata_xy):
     plt.ylabel('x [a.u.]')
     plt.title('Density Difference Along x-y Plane \n time = %.2f'
               % (int(i)*.02) + ' a.u.')
-
     plt.savefig(f'{density_directory}/iteration3D-0000{iii}.png')
     plt.show()
 
@@ -238,7 +214,7 @@ def density_difference_laser_plot(density_directory, laser_file_name, polarizati
     # plotting laser
     ax2.set_autoscalex_on(False)
     ax2.plot(laser_time, laser_amplitude, 'k')
-    ax2.plot(laser_time[i], laser_amplitude[i], marker='X', color='r')
+    ax2.plot(laser_time[i], laser_amplitude[i], marker='.', color='r', markersize=30)
     ax2.set_xlim((0, max(laser_time)))
     ax2.set_ylim((-max(laser_amplitude)-0.001, max(laser_amplitude)+0.001))
     ax2.set_xlabel('time [a.u.]')
@@ -255,6 +231,7 @@ def density_difference_calc(density_directory):
     Inputs
     Returns
     """
+
     #directory = "./N2+/output_iter"
     density_file = f'{density_directory}/td.0000000/density.dx'
 
@@ -271,11 +248,10 @@ def density_difference_calc(density_directory):
     xx, yy = np.meshgrid(x, y)
 
     # looping through the data files; for now we will just work with one file
-    for i in range(0, 300, 200):
+    for i in range(0, 500, 200):
         print('working on iteration ' + str(i))
         ii = str(i)
         iii = ii.zfill(7)
-
         Density2 = f'{density_directory}/td.{iii}/density.dx'
         dens_data2 = fi.density_data(Density2)
         dens_data2 = np.reshape(dens_data2, (num_x, num_y, num_z))
@@ -284,7 +260,6 @@ def density_difference_calc(density_directory):
         # dens_data2 = np.array(densdata2)
 
         densdata_xy = density_difference(dens_data, dens_data2, "riemann", dz)
-
         density_difference_plot(density_directory, i, xx, yy, densdata_xy)
         density_difference_laser_plot(density_directory,
                                       '/home/jovyan/CSCI-project/laser',
