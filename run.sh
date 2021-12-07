@@ -7,7 +7,7 @@ source /opt/conda/etc/profile.d/conda.sh
 #conda activate swefs
 
 # run code with arguments
-python density_difference.py > output.txt
+python density_difference.py --config config.ini > output.txt
 
 # deactivate conda environment
 #conda deactivate
