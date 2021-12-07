@@ -6,6 +6,7 @@ import matplotlib as mpl
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 import os
 import imageio
+import sys
 import configparser
 import argparse
 
@@ -13,9 +14,7 @@ import argparse
 def input_parser():
     """
     This function parses through flags or a config file to get input
-    parameters for the state and hour information desired.
-
-    Returns
+    parameters for the density difference calculation.
     ------------
     """
 
