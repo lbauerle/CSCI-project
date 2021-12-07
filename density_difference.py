@@ -44,7 +44,7 @@ def input_parser():
                         action='store',
                         required=False,
                         help="This is the iteration step for outputs.")
-    parser.add_argument('-p', '--plane', type=str,
+    parser.add_argument('-f', '--plane', type=str,
                         action='store',
                         required=False,
                         help="This is the plane to plot density difference.")
@@ -64,7 +64,7 @@ def input_parser():
                         action='store',
                         required=False,
                         help="This is directory to save plots in.")
-    parser.add_argument('-l', '--level', type=str,
+    parser.add_argument('-v', '--level', type=str,
                         action='store',
                         required=False,
                         help="This is maximum intensity levle to use for the contour plots.")
@@ -281,9 +281,7 @@ def movie(figure_directory, file_type, fps):
 
 
 def main():
-    density_directory, laser_file, polarization, max_iteration, \
-    iteration_step, plane, integration_method, time_units, \
-               cmap, level_max, save_directory = input_parser()
+    density_directory, laser_file, polarization, max_iteration, iteration_step, plane, integration_method, time_units,  cmap, level_max, save_directory = input_parser()
     density_difference_calc()
 
 
