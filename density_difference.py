@@ -281,6 +281,9 @@ def movie(figure_directory, file_type, fps):
 
 
 def main():
+    density_directory, laser_file, polarization, max_iteration, \
+    iteration_step, plane, integration_method, time_units, \
+               cmap, level_max, save_directory = input_parser()
     density_difference_calc()
 
 
