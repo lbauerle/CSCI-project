@@ -80,9 +80,9 @@ def input_parser():
                         action='store',
                         required=False,
                         help="This is maximum intensity levle to use for the contour plots.")
-    counter_inputs = parser.parse_args()
+    calc_inputs = parser.parse_args()
 
-    if counter_inputs.config:
+    if calc_inputs.config:
         config = configparser.ConfigParser()
         config.read("./config.ini")
         density_directory = config['DENSITY']['density_directory']
@@ -99,24 +99,21 @@ def input_parser():
         level_max = config['PLOTTING']['level_max']
         save_directory = config['PLOTTING']['save_directory']
         
-        return density_directory, laser_file, polarization, max_iteration, \
-               iteration_step, plane, integration_method, time_units, \
-               cmap, level_max, save_directory
+        return density_directory, laser_file, polarization, max_iteration, iteration_step, plane, integration_method, time_units, cmap, level_max, save_directory
+    
     else:
-        density_directory = counter_inputs.dens
-        laser_file = counter_inputs.laser
-        polarization = counter_inputs.pol
-        max_iteration = counter_inputs.maxiter
-        iteration_step = counter_inputs.iter
-        plane = counter_inputs.plane
-        integration_method = counter_inputs.int
-        time_units = counter_inputs.time
-        cmap = counter_inputs.cmap
-        level_max  = counter_inputs.level
-        save_directory = counter_inputs.save
-        return density_directory, laser_file, polarization, max_iteration, \
-               iteration_step, plane, integration_method, time_units, \
-               cmap, level_max, save_directory
+        density_directory = calc_inputs.dens
+        laser_file = calc_inputs.laser
+        polarization = calc_inputs.pol
+        max_iteration = calc_inputs.maxiter
+        iteration_step = calc_inputs.iter
+        plane = calc_inputs.plane
+        integration_method = calc_inputs.int
+        time_units = calc_inputs.time
+        cmap = calc_inputs.cmap
+        level_max  = calc_inputs.level
+        save_directory = calc_inputs.save
+        return density_directory, laser_file, polarization, max_iteration, iteration_step, plane, integration_method, time_units, cmap, level_max, save_directory
 
 
 def density_difference(dens_data1, dens_data2, integration_type, grid_spacing):
@@ -229,7 +226,7 @@ def density_difference_laser_plot(density_directory, laser_file_name, polarizati
     plt.show()
 
 
-def density_difference_calc():
+def density_difference_calc(density_directory):
     """
     Inputs
     Returns
@@ -242,7 +239,7 @@ def density_difference_calc():
     size_x, size_y, size_z = fi.grid_size(density_file)
     dx, dy, dz = fi.grid_spacing(density_file)
 
-    raw_density_data = fi.density_data(density_directory)
+    raw_density_data = fi.density_data(density_file)
     dens_data_temp = np.array(raw_density_data)
     dens_data = np.reshape(dens_data_temp, (num_x, num_y, num_z))
 
@@ -294,7 +291,7 @@ def movie(figure_directory, file_type, fps):
 
 def main():
     density_directory, laser_file, polarization, max_iteration, iteration_step, plane, integration_method, time_units,  cmap, level_max, save_directory = input_parser()
-    density_difference_calc()
+    density_difference_calc(density_directory)
 
 
 if __name__ == '__main__':
