@@ -21,6 +21,11 @@ def input_parser():
 
     parser = argparse.ArgumentParser(
         description='')
+    
+    parser.add_argument('-c', '--config', type=str,
+                    action='store',
+                    required=False,
+                    help="This is the config file.")
 
     parser.add_argument('-d', '--dens', type=str,
                         action='store',
@@ -36,34 +41,42 @@ def input_parser():
                         action='store',
                         required=False,
                         help="This is the polarization of the laser.")
+    
     parser.add_argument('-m', '--maxiter', type=str,
                         action='store',
                         required=False,
                         help="This is the maximum number of iterations to be processed.")
+    
     parser.add_argument('-i', '--iter', type=str,
                         action='store',
                         required=False,
                         help="This is the iteration step for outputs.")
+    
     parser.add_argument('-f', '--plane', type=str,
                         action='store',
                         required=False,
                         help="This is the plane to plot density difference.")
+    
     parser.add_argument('-n', '--int', type=str,
                         action='store',
                         required=False,
                         help="This is the integration method to use.")
+    
     parser.add_argument('-t', '--time', type=str,
                         action='store',
                         required=False,
                         help="This is units to use for time.")
-    parser.add_argument('-c', '--cmap', type=str,
+    
+    parser.add_argument('-b', '--cmap', type=str,
                         action='store',
                         required=False,
                         help="This is the colormap to use for plotting.")
+    
     parser.add_argument('-s', '--save', type=str,
                         action='store',
                         required=False,
                         help="This is directory to save plots in.")
+    
     parser.add_argument('-v', '--level', type=str,
                         action='store',
                         required=False,
