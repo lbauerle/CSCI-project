@@ -118,16 +118,29 @@ def input_parser():
 
 def density_difference(dens_data1, dens_data2, integration_type, grid_spacing):
     """
-    density_difference is the function that "integrates" out a particular axis.
+    This function computes the difference between two density files, with a
+    specified integration type: Riemann integral, trapezoidal rule, etc.
 
-    Inputs:
-    1. dens_data1 - denotes the data you are finding the difference with
-       respect to
-    2. dens_data2 - tells you what you are subtracting from dens_data1
-    3. integration_type - denotes the type of integration that will be
-       performed
-    4. grid_spacing - tells you the length of the sub-interval that is being
-       integrated over
+    Inputs
+    ------
+    dens_data1 : numpy 67 x 37 x 67 array
+        array containing the reference density data
+
+    dens_data2 : numpy 67 x 37 x 67 array
+        an array that dens_data1 will be subtracted from
+
+    integration_type : String
+        Denotes the integration type of the following possibilities:
+        The default value is "riemann" which represents a Riemann integral
+
+    grid_spacing : Float
+        The separation between adjacent points on the grid.
+
+    Returns
+    -------
+    densdata_xy : 67 x 67 array
+        This contains the difference between the density and the reference
+        density with the third axis integrated out.
     """
 
     if (integration_type == "riemann"):
@@ -139,9 +152,18 @@ def density_difference(dens_data1, dens_data2, integration_type, grid_spacing):
 
 
 def density_difference_plot(density_directory, index, xx, yy, densdata_xy):
-
     """
-    density_difference_plot plots the difference in the densities
+    This function calls the other two functions in the file in order
+    to create the density difference plots.
+
+    Inputs
+    ------
+    directory : String
+        directory where the plot will be stored as an output
+
+    Returns
+    -------
+    The density difference plot.
     """
 
     i = index
