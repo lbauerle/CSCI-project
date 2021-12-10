@@ -137,7 +137,7 @@ def density_difference(dens_data1, dens_data2, integration_type, grid_spacing):
     if (integration_type == "riemann"):
         int_type = 2
         densdata_tot = dens_data2 - dens_data1
-        densdata_xy = densdata_tot.sum(axis=int_type)*grid_spacing
+        densdata_xy = densdata_tot.sum(axis=int_type) * grid_spacing
 
     return densdata_xy
 
