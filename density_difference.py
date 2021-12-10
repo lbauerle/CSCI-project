@@ -183,6 +183,7 @@ def laser_plt(density_directory, laser_file_name, polarization,
     """
     This function plots the density difference with the laser and point
     during the pulse at which the density difference is taken.
+
     Parameters
     ----------
     density_directory : string
