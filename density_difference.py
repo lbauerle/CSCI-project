@@ -20,7 +20,7 @@ def input_parser():
 
     parser = argparse.ArgumentParser(
         description='')
-    
+
     parser.add_argument('-c', '--config', type=str,
                     action='store',
                     required=False,
@@ -30,52 +30,52 @@ def input_parser():
                         action='store',
                         required=False,
                         help="This is the directory containing the density file to be parsed.")
-   
+
     parser.add_argument('-l', '--laser', type=str,
                         action='store',
                         required=False,
                         help="This is the directory for the laser file to be parsed.")
-    
+
     parser.add_argument('-p', '--pol', type=str,
                         action='store',
                         required=False,
                         help="This is the polarization of the laser.")
-    
+
     parser.add_argument('-m', '--maxiter', type=str,
                         action='store',
                         required=False,
                         help="This is the maximum number of iterations to be processed.")
-    
+
     parser.add_argument('-i', '--iter', type=str,
                         action='store',
                         required=False,
                         help="This is the iteration step for outputs.")
-    
+
     parser.add_argument('-f', '--plane', type=str,
                         action='store',
                         required=False,
                         help="This is the plane to plot density difference.")
-    
+
     parser.add_argument('-n', '--int', type=str,
                         action='store',
                         required=False,
                         help="This is the integration method to use.")
-    
+
     parser.add_argument('-t', '--time', type=str,
                         action='store',
                         required=False,
                         help="This is units to use for time.")
-    
+
     parser.add_argument('-b', '--cmap', type=str,
                         action='store',
                         required=False,
                         help="This is the colormap to use for plotting.")
-    
+
     parser.add_argument('-s', '--save', type=str,
                         action='store',
                         required=False,
                         help="This is directory to save plots in.")
-    
+
     parser.add_argument('-v', '--level', type=str,
                         action='store',
                         required=False,
@@ -90,17 +90,17 @@ def input_parser():
         iteration_step = config['DENSITY']['iteration_step']
         plane = config['DENSITY']['plane']
         integration_method = config['DENSITY']['integration_method']
-        
+
         laser_file = config['LASER']['laser_directory']
         polarization = config['LASER']['polarization']
         time_units = config['LASER']['time_units']
-        
+
         cmap = config['PLOTTING']['cmap']
         level_max = config['PLOTTING']['level_max']
         save_directory = config['PLOTTING']['save_directory']
-        
+
         return density_directory, laser_file, polarization, max_iteration, iteration_step, plane, integration_method, time_units, cmap, level_max, save_directory
-    
+
     else:
         density_directory = calc_inputs.dens
         laser_file = calc_inputs.laser
@@ -111,8 +111,9 @@ def input_parser():
         integration_method = calc_inputs.int
         time_units = calc_inputs.time
         cmap = calc_inputs.cmap
-        level_max  = calc_inputs.level
+        level_max = calc_inputs.level
         save_directory = calc_inputs.save
+
         return density_directory, laser_file, polarization, max_iteration, iteration_step, plane, integration_method, time_units, cmap, level_max, save_directory
 
 
@@ -187,7 +188,7 @@ def density_difference_plot(density_directory, index, xx, yy, densdata_xy):
     plt.show()
 
 
-def density_difference_laser_plot(density_directory, laser_file_name, polarization,
+def laser_plt(density_directory, laser_file_name, polarization,
                                   index, xx, yy, densdata_xy):
     """
     This function plots the density difference with the laser and point
@@ -255,7 +256,7 @@ def density_difference_calc(density_directory):
     Inputs
     Returns
     """
-    #directory = "./N2+/output_iter"
+    # directory = "./N2+/output_iter"
     density_file = f'{density_directory}/td.0000000/density.dx'
 
     num_x, num_y, num_z = fi.num_grid_points(density_file)
@@ -286,25 +287,24 @@ def density_difference_calc(density_directory):
         densdata_xy = density_difference(dens_data, dens_data2, "riemann", dz)
 
         density_difference_plot(density_directory, i, xx, yy, densdata_xy)
-        density_difference_laser_plot(density_directory,
-                                      '/home/jovyan/CSCI-project/laser',
-                                      'x', i, xx, yy, densdata_xy)
+        laser_plt(density_directory, 'N2+/td.general/laser',
+                  'x', i, xx, yy, densdata_xy)
 
 
 def movie(figure_directory, file_type, fps):
     """
-    This function turns the plots of the density difference to a movie 
-    in time. Note: The order of the movie will coincide with the 
+    This function turns the plots of the density difference to a movie
+    in time. Note: The order of the movie will coincide with the
     alphabetical order of the density or density difference plots.
 
     Parameters
-    ------------------
+    ----------
     figure_directory : string
         This input is the full path of the .png saved plots.
     file_type: string
         This is the file type for the plots. The default is '.png'.
     fps : int
-        This is the frames per second. The default value is 400.   
+        This is the frames per second. The default value is 400.
     """
     images = []
     for file_name in os.listdir(figure_directory):
