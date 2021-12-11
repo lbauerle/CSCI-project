@@ -111,22 +111,17 @@ def density_difference(dens_data1, dens_data2, integration_type, grid_spacing):
     """
     This function computes the difference between two density files, with a
     specified integration type: Riemann integral, trapezoidal rule, etc.
-
     Inputs
     ------
     dens_data1 : numpy 67 x 37 x 67 array
         array containing the reference density data
-
     dens_data2 : numpy 67 x 37 x 67 array
         an array that dens_data1 will be subtracted from
-
     integration_type : String
         Denotes the integration type of the following possibilities:
         The default value is "riemann" which represents a Riemann integral
-
     grid_spacing : Float
         The separation between adjacent points on the grid.
-
     Returns
     -------
     densdata_xy : 67 x 67 array
@@ -146,12 +141,10 @@ def dens_diff_plt(density_directory, index, xx, yy, densdata_xy):
     """
     This function calls the other two functions in the file in order
     to create the density difference plots.
-
     Inputs
     ------
     directory : String
         directory where the plot will be stored as an output
-
     Returns
     -------
     The density difference plot.
@@ -183,15 +176,12 @@ def laser_plt(density_directory, laser_file_name, polarization,
     """
     This function plots the density difference with the laser and point
     during the pulse at which the density difference is taken.
-
     Parameters
     ----------
     density_directory : string
         This input is the full path of the .dx file from which to get data.
-
     laser_file_name : string
         This input is the full path of the laser file from which to get data.
-
     Returns
     -------
     """
@@ -248,18 +238,14 @@ def movie(figure_directory, file_type, fps):
     This function turns the plots of the density difference to a movie
     in time. Note: The order of the movie will coincide with the
     alphabetical order of the density or density difference plots.
-
     Parameters
     ----------
     figure_directory : string
         This input is the full path of the .png saved plots.
-
     file_type: string
         This is the file type for the plots. The default is '.png'.
-
     fps : int
         This is the frames per second. The default value is 400.
-
     Returns
     -------
     This function saves a .gig file to a specified directory
