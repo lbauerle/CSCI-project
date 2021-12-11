@@ -109,16 +109,24 @@ def input_parser():
 
 def density_difference(dens_data1, dens_data2, integration_type, grid_spacing):
     """
-    density_difference is the function that "integrates" out a particular axis.
-
-    Inputs:
-    1. dens_data1 - denotes the data you are finding the difference with
-       respect to
-    2. dens_data2 - tells you what you are subtracting from dens_data1
-    3. integration_type - denotes the type of integration that will be
-       performed
-    4. grid_spacing - tells you the length of the sub-interval that is being
-       integrated over
+    This function computes the difference between two density files, with a
+    specified integration type: Riemann integral, trapezoidal rule, etc.
+    Inputs
+    ------
+    dens_data1 : numpy 67 x 37 x 67 array
+        array containing the reference density data
+    dens_data2 : numpy 67 x 37 x 67 array
+        an array that dens_data1 will be subtracted from
+    integration_type : String
+        Denotes the integration type of the following possibilities:
+        The default value is "riemann" which represents a Riemann integral
+    grid_spacing : Float
+        The separation between adjacent points on the grid.
+    Returns
+    -------
+    densdata_xy : 67 x 67 array
+        This contains the difference between the density and the reference
+        density with the third axis integrated out.
     """
 
     if (integration_type == "riemann"):
@@ -131,7 +139,15 @@ def density_difference(dens_data1, dens_data2, integration_type, grid_spacing):
 
 def dens_diff_plt(density_directory, index, xx, yy, densdata_xy):
     """
-    density_difference_plot plots the difference in the densities
+    This function calls the other two functions in the file in order
+    to create the density difference plots.
+    Inputs
+    ------
+    directory : String
+        directory where the plot will be stored as an output
+    Returns
+    -------
+    The density difference plot.
     """
 
     i = index
@@ -150,6 +166,7 @@ def dens_diff_plt(density_directory, index, xx, yy, densdata_xy):
     plt.ylabel('x [a.u.]')
     plt.title('Density Difference Along x-y Plane \n time = %.2f'
               % (int(i)*.02) + ' a.u.')
+
     plt.savefig(f'{density_directory}/iteration3D-0000{iii}.png')
     plt.show()
 
@@ -159,15 +176,12 @@ def laser_plt(density_directory, laser_file_name, polarization,
     """
     This function plots the density difference with the laser and point
     during the pulse at which the density difference is taken.
-
     Parameters
     ----------
     density_directory : string
         This input is the full path of the .dx file from which to get data.
-
     laser_file_name : string
         This input is the full path of the laser file from which to get data.
-
     Returns
     -------
     """
@@ -207,7 +221,7 @@ def laser_plt(density_directory, laser_file_name, polarization,
     # plotting laser
     ax2.set_autoscalex_on(False)
     ax2.plot(laser_time, laser_amplitude, 'k')
-    ax2.plot(laser_time[i], laser_amplitude[i], marker='.', color='r', markersize=30)
+    ax2.plot(laser_time[i], laser_amplitude[i], marker='X', color='r')
     ax2.set_xlim((0, max(laser_time)))
     ax2.set_ylim((-max(laser_amplitude)-0.001, max(laser_amplitude)+0.001))
     ax2.set_xlabel('time [a.u.]')
@@ -224,27 +238,18 @@ def movie(figure_directory, file_type, fps):
     This function turns the plots of the density difference to a movie
     in time. Note: The order of the movie will coincide with the
     alphabetical order of the density or density difference plots.
-
     Parameters
     ----------
     figure_directory : string
         This input is the full path of the .png saved plots.
-
     file_type: string
         This is the file type for the plots. The default is '.png'.
-
     fps : int
         This is the frames per second. The default value is 400.
-
     Returns
     -------
     This function saves a .gig file to a specified directory
     """
-<<<<<<< HEAD
-
-    #directory = "./N2+/output_iter"
-    density_file = f'{density_directory}/td.0000000/density.dx'
-=======
     images = []
     for file_name in os.listdir(figure_directory):
         if file_name.endswith(file_type):
@@ -272,7 +277,6 @@ def main():
 
     # identifying the reference density files
     density_file = f'{dens_dir}/td.0000000/density.dx'
->>>>>>> 449623a26c4ff424d8dc6171bf39040a436d07c8
 
     num_x, num_y, num_z = fi.num_grid_points(density_file)
     size_x, size_y, size_z = fi.grid_size(density_file)
@@ -286,14 +290,6 @@ def main():
     y = [np.linspace(-size_y, size_y, num=num_y)]
     xx, yy = np.meshgrid(x, y)
 
-<<<<<<< HEAD
-    # looping through the data files; for now we will just work with one file
-    for i in range(0, 500, 200):
-        print('working on iteration ' + str(i))
-        ii = str(i)
-        iii = ii.zfill(7)
-        Density2 = f'{density_directory}/td.{iii}/density.dx'
-=======
     # iterating through the available files in the directory
     for i in range(0, 300, 200):
         print('working on iteration ' + str(i))
@@ -301,51 +297,15 @@ def main():
         iii = ii.zfill(7)
 
         Density2 = f'{dens_dir}/td.{iii}/density.dx'
->>>>>>> 449623a26c4ff424d8dc6171bf39040a436d07c8
         dens_data2 = fi.density_data(Density2)
         dens_data2 = np.reshape(dens_data2, (num_x, num_y, num_z))
 
         # subtracting dens_data2 from the reference dens_data
         densdata_xy = density_difference(dens_data, dens_data2, "riemann", dz)
-<<<<<<< HEAD
-        density_difference_plot(density_directory, i, xx, yy, densdata_xy)
-        density_difference_laser_plot(density_directory,
-                                      '/home/jovyan/CSCI-project/laser',
-                                      'x', i, xx, yy, densdata_xy)
-
-
-def movie(figure_directory, file_type, fps):
-    """
-    This function turns the plots of the density difference to a movie 
-    in time. Note: The order of the movie will coincide with the 
-    alphabetical order of the density or density difference plots.
-
-    Parameters
-    ------------------
-    figure_directory : string
-        This input is the full path of the .png saved plots.
-    file_type: string
-        This is the file type for the plots. The default is '.png'.
-    fps : int
-        This is the frames per second. The default value is 400.   
-    """
-    images = []
-    for file_name in os.listdir(figure_directory):
-        if file_name.endswith(file_type):
-            file_path = os.path.join(figure_directory, file_name)
-            images.append(imageio.imread(file_path))
-    imageio.mimsave(f'{figure_directory}\\density_difference_movie.gif', images, fps=fps)
-
-
-def main():
-    density_directory, laser_file, polarization, max_iteration, iteration_step, plane, integration_method, time_units,  cmap, level_max, save_directory = input_parser()
-    density_difference_calc(density_directory)
-=======
 
         dens_diff_plt(dens_dir, i, xx, yy, densdata_xy)
         laser_plt(dens_dir, 'N2+/td.general/laser', 'x', i, xx, yy,
                   densdata_xy)
->>>>>>> 449623a26c4ff424d8dc6171bf39040a436d07c8
 
 
 if __name__ == '__main__':
